@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  /* Backgrounds & Surfaces */
+  --color-bg-base: #fafafa; /* Main page background */
+  --color-surface: #ffffff; /* Cards, nav, footer */
+  --color-surface-alt: #f4f4f5; /* Section alternates */
+
+  /* Text & Readability */
+  --color-text-primary: #0f172a; /* Headings, active states */
+  --color-text-secondary: #475569; /* Subtitles, captions */
+  --color-text-body: #1e293b; /* Main content text */
+  --color-text-subtitle: #334155; /* Secondary text, descriptions */
+  --color-text-muted: #94a3b8; /* Placeholders, subtle captions */
+
+  /* Primary Actions (Deep Ocean Blue) */
+  --color-primary: #0c4a6e; /* Buttons, active states */
+  --color-primary-hover: #083344; /* Hover states */
+  --color-primary-light: #e0f2fe; /* Badges, subtle highlights */
+
+  /* Secondary Accents (Warm Sand) */
+  --color-secondary: #b45309; /* Secondary CTAs, warnings */
+  --color-secondary-hover: #92400e; /* Hover states */
+  --color-secondary-light: #fef3c7; /* Secondary highlights */
+
+  /* Borders & Dividers */
+  --color-border: #e4e4e7; /* Standard dividers, inputs */
+  --color-border-strong: #d4d4d8; /* Focus rings, strong outlines */
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+}
