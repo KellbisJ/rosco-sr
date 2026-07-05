@@ -52,7 +52,7 @@ const worksLabels: string[] = [
       </div>
     </section>
 
-    <section class="bg-bg-base py-20 sm:py-28">
+    <section class="bg-bg-base py-20 sm:py-28" aria-label="Project gallery">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mx-auto max-w-2xl text-center">
           <h2
@@ -66,7 +66,9 @@ const worksLabels: string[] = [
         <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {
             worksImgs.map((src, index) => (
-              <div class="group relative overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border aspect-[4/3]">
+              <div
+                class="group relative overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border aspect-[4/3]"
+                role="listitem">
                 <img
                   src={src}
                   alt={`Project ${index + 1}`}

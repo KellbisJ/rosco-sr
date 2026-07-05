@@ -29,7 +29,7 @@ const footerLinks = {
             <h3 class="text-sm font-semibold uppercase tracking-wider text-muted">
               {category}
             </h3>
-            <ul class="mt-4 space-y-2">
+            <ul class="mt-4 space-y-2" aria-label={`${category} links`}>
               {links.map((link) => (
                 <li>
                   <a
