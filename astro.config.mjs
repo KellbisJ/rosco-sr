@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://rosco-sr.netlify.app/",
+  site: "https://rosco-sr.com/",
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

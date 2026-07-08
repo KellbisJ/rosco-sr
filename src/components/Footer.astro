@@ -1,7 +1,13 @@
 ---
 // src/components/Footer.astro
 const footerLinks = {
-  company: [{ label: "About ROSCO", href: "/about" }],
+  company: [{ label: "About ROSCO S&R", href: "/about" }],
+  services: [
+    { label: "Kitchen & Bathroom Removal", href: "/services" },
+    { label: "Floor & Tile Removal", href: "/services" },
+    { label: "Light Demolition (Non-Structural)", href: "/services" },
+    { label: "Rubbish Removal & Cleaning", href: "/services" },
+  ],
   contact: [
     { label: "Perth, WA", href: "/contact" },
     {
@@ -20,7 +26,13 @@ const footerLinks = {
           ROSCO S&R
         </h3>
         <p class="mt-4 text-sm text-secondary">
-          Modern services built in Perth. Reliable. Scalable. Yours.
+          Professional strip out, non-structural demolition, and removal
+          services in Perth, Western Australia.
+        </p>
+        <p class="mt-2 text-sm text-secondary">
+          <a href="tel:+61406917864" class="hover:text-primary">
+            +61 406 917 864
+          </a>
         </p>
       </div>
       {

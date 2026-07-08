@@ -2,6 +2,48 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+
+const {
+  title = "ROSCO S&R | Strip Out & Removal Services Perth",
+  description = "ROSCO S&R specializes in professional non-structural demolition, strip outs, bathroom and kitchen removal, and surface preparation in Perth, WA.",
+  canonical = "",
+  ogImage = "/og-image.png",
+  ogTitle = title,
+  ogDescription = description,
+} = Astro.props;
+
+const siteUrl = "https://rosco-sr.com";
+const fullCanonical = canonical ? `${siteUrl}${canonical}` : siteUrl;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "ROSCO S&R",
+  description:
+    "Professional non-structural demolition, strip outs, bathroom and kitchen removal, and surface preparation in Perth, Western Australia.",
+  url: siteUrl,
+  areaServed: {
+    "@type": "Place",
+    name: "Perth, Western Australia",
+  },
+  serviceType: [
+    "Non-Structural Demolition",
+    "Strip Out",
+    "Bathroom Removal",
+    "Kitchen Removal",
+    "Surface Preparation",
+    "Concrete Cutting",
+    "Floor Grinding",
+  ],
+  telephone: "+61406917864",
+  email: "rosco.s.r.service@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Perth",
+    addressRegion: "WA",
+    addressCountry: "AU",
+  },
+};
 ---
 
 <!doctype html>
@@ -9,11 +51,31 @@ import "../styles/global.css";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="ROSCO S&R specializes in professional non-structural demolition, strip outs, bathroom and kitchen removal, and surface preparation in Perth."
-    />
-    <title>ROSCO S&R | Modern Services Perth</title>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={fullCanonical} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:url" content={fullCanonical} />
+    <meta property="og:site_name" content="ROSCO S&R" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {JSON.stringify(jsonLd)}
+    </script>
+
+    <link rel="icon" type="image/png" href="/rosco-sr.png" />
   </head>
   <body class="bg-bg-base text-text-body min-h-screen flex flex-col">
     <Header />
