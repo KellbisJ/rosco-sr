@@ -7,7 +7,6 @@ const {
   title = "ROSCO S&R | Strip Out & Removal Services Perth",
   description = "ROSCO S&R specializes in professional non-structural demolition, strip outs, bathroom and kitchen removal, and surface preparation in Perth, WA.",
   canonical = "",
-  ogImage = "/og-image.png",
   ogTitle = title,
   ogDescription = description,
 } = Astro.props;
@@ -60,15 +59,13 @@ const jsonLd = {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={ogDescription} />
-    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
     <meta property="og:url" content={fullCanonical} />
     <meta property="og:site_name" content="ROSCO S&R" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={ogDescription} />
-    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
