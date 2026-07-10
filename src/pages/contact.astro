@@ -4,8 +4,7 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout
   title="Contact ROSCO S&R | Free Quote for Strip Out & Removal Perth"
-  description="Get a free quote for strip out, demolition, bathroom removal, and surface preparation services in Perth, WA. Call +61 406 917 864 or email us today."
->
+  description="Get a free quote for strip out, demolition, bathroom removal, and surface preparation services in Perth, WA. Call +61 406 917 864 or email us today.">
   <!-- Hero with Embedded Form -->
   <section class="relative overflow-hidden bg-surface-alt py-24 sm:py-32">
     <!-- Decorative background elements -->
@@ -16,11 +15,52 @@ import Layout from "../layouts/Layout.astro";
       class="absolute -bottom-32 -right-32 h-64 w-64 rounded-full bg-primary/5 blur-3xl">
     </div>
 
-    <div class="relative mx-auto max-w-7xl px-6 lg:px-8">
+    <!-- Google Maps background -->
+    <div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d432910.83790986397!2d115.63121060437139!3d-32.03905359437239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2a32966cdb47733d%3A0x304f0b535df55d0!2sPerth%20WA%2C%20Australia!5e0!3m2!1sen!2sve!4v1777482079192!5m2!1sen!2sve"
+        width="100%"
+        height="100%"
+        style="border:0;"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Map of Perth, Australia">
+      </iframe>
+    </div>
+    <!-- Overlay to maintain readability -->
+    <div class="absolute inset-0 z-[1] bg-surface-alt/60"></div>
+
+    <!-- Bottom fade separator -->
+    <div
+      class="absolute bottom-0 left-0 right-0 z-[2] h-48 bg-gradient-to-b from-transparent to-bg-base pointer-events-none">
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl text-primary">
           Get in Touch
         </h1>
+        <div
+          class="mt-4 inline-flex items-center gap-2 rounded-full bg-primary-light px-4 py-1.5 text-sm font-medium text-primary">
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z">
+            </path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z">
+            </path>
+          </svg>
+          Based in Perth, Australia
+        </div>
         <p class="mt-4 text-lg leading-8 text-text-body">
           Hard yakka ! 🛠️ At ROSCO S&R Need a professional touch for your site
           in Perth? Send us a message for a free quote today! 📞
@@ -44,18 +84,17 @@ import Layout from "../layouts/Layout.astro";
   </section>
 
   <!-- Contact Info Section -->
-  <section class="bg-bg-base py-24 sm:py-32">
+  <section class="bg-bg-base pb-24 sm:pb-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-primary">
+          Let's Talk About Your Project
+        </h2>
         <div
-          class="inline-flex items-center gap-2 rounded-full bg-primary-light px-4 py-1.5 text-sm font-medium text-primary">
+          class="mt-4 inline-flex items-center gap-2 rounded-full bg-primary-light px-4 py-1.5 text-sm font-medium text-primary">
           <span class="h-2 w-2 rounded-full bg-primary"></span>
           Contact Info
         </div>
-        <h2
-          class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl text-primary">
-          Let's Talk About Your Project
-        </h2>
         <p class="mt-4 text-lg leading-8 text-text-body">
           Ready to transform your space? Reach out and we'll get back to you
           with a free quote.
