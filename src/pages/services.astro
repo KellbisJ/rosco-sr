@@ -65,6 +65,57 @@ const videos = [
   },
 ];
 
+const renovations = [
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595431.jpg",
+    category: "Floor Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595423.jpg",
+    category: "Kitchen Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595429.jpg",
+    category: "Floor Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595426.jpg",
+    category: "Floor Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595430.jpg",
+    category: "Floor Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595405.jpg",
+    category: "Kitchen Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595428.jpg",
+    category: "Floor Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595427.jpg",
+    category: "Floor Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595422.jpg",
+    category: "Kitchen Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595433.jpg",
+    category: "Floor Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595432.jpg",
+    category: "Floor Renovation",
+  },
+  {
+    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595424.jpg",
+    category: "Kitchen Renovation",
+  },
+];
+
 const pageDescription =
   "ROSCO S&R offers professional strip out, non-structural demolition, floor and tile removal, debris removal, concrete cutting, floor grinding, and surface preparation services in Perth, WA.";
 ---
@@ -72,6 +123,7 @@ const pageDescription =
 <Layout
   title="Services | Strip Out, Demolition & Removal Perth"
   description={pageDescription}>
+  <!-- Services Section -->
   <section class="bg-surface-alt py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
@@ -90,7 +142,7 @@ const pageDescription =
                 <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light text-primary transition-all duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
                   <service.icon class="h-6 w-6" />
                 </div>
-                <h3 class="mt-4 text-lg font-semibold leading-6 text-primary transition-colors duration-300">
+                <h3 class="mt-4 text-lg font-semibold leading-6 text-primary">
                   {service.title}
                 </h3>
                 <p class="mt-2 text-sm leading-6 text-subtitle">
@@ -99,11 +151,9 @@ const pageDescription =
                 <div class="mt-auto flex items-center pt-4">
                   <a
                     href="/contact"
-                    class="inline-flex items-center gap-2 text-sm font-semibold leading-6 text-primary transition-all duration-300 group/cta">
-                    Get Quote
-                    <span
-                      class="inline-block transition-transform duration-300 group-hover/cta:translate-x-1"
-                      aria-hidden="true">
+                    class="inline-flex items-center gap-2 text-sm font-semibold leading-6 text-primary group/cta">
+                    Get Quote{" "}
+                    <span class="inline-block transition-transform duration-300 group-hover/cta:translate-x-1">
                       →
                     </span>
                   </a>
@@ -114,8 +164,54 @@ const pageDescription =
           ))
         }
       </div>
+    </div>
+  </section>
 
-      <div class="mx-auto mt-24 max-w-2xl lg:text-center">
+  <!-- Renovations Section -->
+  <section
+    class="bg-surface-alt py-16 sm:py-24"
+    aria-label="Renovations showcase">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center mb-10 sm:mb-16">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-primary">
+        Renovations
+      </h2>
+      <p class="mt-4 text-lg leading-8 text-text-body">
+        See the quality of our renovation work
+      </p>
+    </div>
+
+    <div
+      class="swiper renovations-swiper h-[70vh] sm:h-[80vh] lg:h-[85vh] min-h-[400px] w-full lg:w-3xl shadow-2xl rounded-xl">
+      <div class="swiper-wrapper">
+        {
+          renovations.map((renovation) => (
+            <div class="swiper-slide relative h-full w-full">
+              <img
+                src={renovation.src}
+                alt={renovation.category}
+                class="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-16">
+                <span class="inline-block rounded-full bg-white/20 backdrop-blur-md px-4 py-2 text-sm font-semibold text-white border border-white/30">
+                  {renovation.category}
+                </span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="bg-surface-alt py-24 sm:py-32" aria-label="Why choose us">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:text-center">
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-primary">
           Why Choose Us?
         </h2>
@@ -153,6 +249,7 @@ const pageDescription =
 
   <div class="h-px w-full bg-border"></div>
 
+  <!-- Video Section -->
   <section class="bg-surface-alt py-24 sm:py-32" aria-label="Video showcase">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
@@ -182,15 +279,12 @@ const pageDescription =
           ))
         }
       </div>
-
       <div class="mt-20 text-center">
         <a
           href="/contact"
-          class="group inline-flex items-center gap-3 rounded-xl bg-primary px-10 py-5 text-lg font-bold text-white shadow-xl shadow-primary/30 transition-all duration-300 hover:bg-primary-hover hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
-          Get a Free Quote
-          <span
-            class="inline-block transition-transform duration-300 group-hover:translate-x-1"
-            aria-hidden="true">
+          class="group inline-flex items-center gap-3 rounded-xl bg-primary px-10 py-5 text-lg font-bold text-white shadow-xl shadow-primary/30 transition-all duration-300 hover:bg-primary-hover hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5">
+          Get a Free Quote <span
+            class="inline-block transition-transform duration-300 group-hover:translate-x-1">
             →
           </span>
         </a>
@@ -198,3 +292,101 @@ const pageDescription =
     </div>
   </section>
 </Layout>
+
+<style is:global>
+  .renovations-swiper .swiper-slide {
+    background-color: #111827;
+    overflow: hidden;
+  }
+
+  .renovations-swiper .swiper-button-prev,
+  .renovations-swiper .swiper-button-next {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 9999px;
+    color: white !important;
+    transition:
+      background 0.3s ease,
+      transform 0.3s ease;
+  }
+  .renovations-swiper .swiper-button-prev::after,
+  .renovations-swiper .swiper-button-next::after {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .renovations-swiper .swiper-button-prev:hover,
+  .renovations-swiper .swiper-button-next:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+
+  .renovations-swiper .swiper-pagination {
+    bottom: 20px !important;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .renovations-swiper .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+  }
+  .renovations-swiper .swiper-pagination-bullet-active {
+    width: 30px;
+    background: white;
+  }
+
+  /* Cinematic effect kenburns */
+  @keyframes kenburns {
+    0% {
+      transform: scale(1) translate(0, 0);
+    }
+    100% {
+      transform: scale(1.12) translate(-1.5%, 1%);
+    }
+  }
+  .renovations-swiper .swiper-slide-active img {
+    animation: kenburns 6s ease-out forwards;
+  }
+
+  /*  Text Reveal */
+  .renovations-swiper .swiper-slide .absolute.bottom-0 span {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .renovations-swiper .swiper-slide-active .absolute.bottom-0 span {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+  }
+</style>
+
+<script>
+  import Swiper from "swiper/bundle";
+  import "swiper/css/bundle";
+
+  new Swiper(".renovations-swiper", {
+    loop: true,
+    effect: "fade",
+    fadeEffect: { crossFade: true },
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: false,
+    },
+    pagination: { el: ".swiper-pagination", clickable: true },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+</script>
