@@ -127,32 +127,32 @@ const pageDescription =
   <section class="bg-surface-alt py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-primary">
+        <h1 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
           Our Services
-        </h2>
+        </h1>
       </div>
       <div
         class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         {
           services.map((service, i) => (
             <article
-              class="group relative flex flex-col overflow-hidden rounded-2xl bg-surface shadow-sm ring-1 ring-border transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
+              class="group relative flex flex-col overflow-hidden rounded-2xl bg-surface ring-1 ring-border transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
               style={`animation: fade-in-up 0.6s ease-out ${i * 0.1}s both`}>
               <div class="relative z-10 flex flex-col p-8 min-h-full">
                 <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light text-primary transition-all duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
                   <service.icon class="h-6 w-6" />
                 </div>
-                <h3 class="mt-4 text-lg font-semibold leading-6 text-primary">
+                <h3 class="mt-4 text-lg font-semibold leading-6 text-ink">
                   {service.title}
                 </h3>
-                <p class="mt-2 text-sm leading-6 text-subtitle">
+                <p class="mt-2 text-sm leading-6 text-text-subtitle">
                   {service.description}
                 </p>
                 <div class="mt-auto flex items-center pt-4">
                   <a
                     href="/contact"
                     class="inline-flex items-center gap-2 text-sm font-semibold leading-6 text-primary group/cta">
-                    Get Quote{" "}
+                    Get a Free Quote{" "}
                     <span class="inline-block transition-transform duration-300 group-hover/cta:translate-x-1">
                       →
                     </span>
@@ -172,7 +172,7 @@ const pageDescription =
     class="bg-surface-alt py-16 sm:py-24"
     aria-label="Renovations showcase">
     <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center mb-10 sm:mb-16">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-primary">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
         Renovations
       </h2>
       <p class="mt-4 text-lg leading-8 text-text-body">
@@ -209,34 +209,20 @@ const pageDescription =
   </section>
 
   <!-- Why Choose Us Section -->
-  <section class="bg-surface-alt py-24 sm:py-32" aria-label="Why choose us">
+  <section class="bg-bg-base py-24 sm:py-32" aria-label="Why choose us">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-primary">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
           Why Choose Us?
         </h2>
-        <p class="mt-6 text-lg leading-8 text-text-body">
-          At ROSCO S&R, we guarantee clean, precise work focused on efficiency
-          and quality. We provide professional and punctual service throughout
-          the Perth area.
-        </p>
         <dl
           class="mx-auto mt-10 grid max-w-xl gap-6 sm:grid-cols-2 lg:max-w-none lg:grid-cols-4">
           {
             reasons.map((reason, i) => (
               <div
-                class="flex flex-col items-center group relative rounded-xl bg-surface p-6 shadow-sm ring-1 ring-border transition-all duration-500 hover:shadow-md hover:-translate-y-0.5"
+                class="flex flex-col items-center rounded-2xl bg-surface p-6 ring-1 ring-border transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
                 style={`animation: fade-in-up 0.6s ease-out ${i * 0.1 + 0.4}s both`}>
-                <div class="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-light text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white">
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      fill-rule="evenodd"
-                      d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <dt class="text-sm font-semibold leading-6 text-primary">
+                <dt class="text-sm font-semibold leading-6 text-ink">
                   {reason}
                 </dt>
               </div>
@@ -250,10 +236,10 @@ const pageDescription =
   <div class="h-px w-full bg-border"></div>
 
   <!-- Video Section -->
-  <section class="bg-surface-alt py-24 sm:py-32" aria-label="Video showcase">
+  <section class="bg-bg-base py-24 sm:py-32" aria-label="Video showcase">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-primary">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
           See Our Work in Action
         </h2>
         <p class="mt-4 text-lg leading-8 text-text-body">
@@ -265,11 +251,10 @@ const pageDescription =
         {
           videos.map((video) => (
             <div class="flex flex-col items-center gap-4">
-              <div class="relative w-full max-w-xs overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 ring-border">
+              <div class="relative w-full max-w-xs aspect-[9/16] overflow-hidden rounded-2xl bg-[#111827] shadow-lg ring-1 ring-border">
                 <video
                   src={video.src}
-                  title="job"
-                  class="h-[574px] w-full object-contain"
+                  class="absolute inset-0 h-full w-full object-cover"
                   controls
                   playsinline
                   preload="none"
@@ -348,11 +333,11 @@ const pageDescription =
       transform: scale(1) translate(0, 0);
     }
     100% {
-      transform: scale(1.12) translate(-1.5%, 1%);
+      transform: scale(1.08) translate(-1.5%, 1%);
     }
   }
   .renovations-swiper .swiper-slide-active img {
-    animation: kenburns 6s ease-out forwards;
+    animation: kenburns 4.5s ease-out forwards;
   }
 
   /*  Text Reveal */
@@ -379,10 +364,11 @@ const pageDescription =
     effect: "fade",
     fadeEffect: { crossFade: true },
     autoplay: {
-      delay: 2500,
+      delay: 5000,
       disableOnInteraction: false,
       pauseOnMouseEnter: false,
     },
+    keyboard: { enabled: true, onlyInViewport: true },
     pagination: { el: ".swiper-pagination", clickable: true },
     navigation: {
       nextEl: ".swiper-button-next",

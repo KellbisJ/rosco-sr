@@ -12,7 +12,9 @@ const {
 } = Astro.props;
 
 const siteUrl = "https://rosco-sr.com";
-const fullCanonical = canonical ? `${siteUrl}${canonical}` : siteUrl;
+const fullCanonical = canonical
+  ? `${siteUrl}${canonical}`
+  : `${siteUrl}${Astro.url.pathname}`;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -65,9 +67,14 @@ const jsonLd = {
     <meta property="og:site_name" content="ROSCO S&R" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={ogDescription} />
+    <meta name="twitter:image" content="https://ik.imagekit.io/137/rosco-sr/12.webp" />
+
+    <!-- Open Graph image -->
+    <meta property="og:image" content="https://ik.imagekit.io/137/rosco-sr/12.webp" />
+    <meta property="og:image:alt" content="Surface preparation work by ROSCO S&R in Perth, WA" />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">

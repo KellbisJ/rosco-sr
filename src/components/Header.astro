@@ -11,25 +11,130 @@ const logo = "https://ik.imagekit.io/137/rosco-sr/rosco-sr.png";
 
 <header
   class="sticky top-0 z-50 w-full border-b bg-surface/80 backdrop-blur-sm border-border">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
-    <a href="/" class="shrink-0 leading-none" aria-label="ROSCO S&R Home">
-      <img src={logo} alt="ROSCO S&R - Professional Strip Out & Removal Services Perth" class="h-12 w-auto object-contain" />
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-2 py-2 sm:px-4">
+    <a
+      href="/"
+      class="shrink-0 leading-none rounded-md focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+      aria-label="ROSCO S&R Home">
+      <img
+        src={logo}
+        alt="ROSCO S&R - Professional Strip Out & Removal Services Perth"
+        class="h-10 w-auto object-contain sm:h-12" />
     </a>
     <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="text-sm font-medium text-secondary transition-colors hover:text-primary hover:underline">
+            data-nav-link={link.href}
+            class="inline-flex items-center rounded-md px-1 py-2 text-sm font-medium text-secondary transition-colors hover:text-primary hover:underline focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
             {link.label}
           </a>
         ))
       }
     </nav>
-    <a
-      href="/contact"
-      class="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold text-white bg-primary transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
-      Get a Quote
-    </a>
+    <div class="flex items-center gap-2">
+      <a
+        href="/contact"
+        class="min-h-11 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold text-white bg-primary transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+        Get a Quote
+      </a>
+      <button
+        type="button"
+        id="mobile-menu-toggle"
+        class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-md text-secondary transition-colors hover:text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu">
+        <svg
+          aria-hidden="true"
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div
+    id="mobile-menu"
+    class="absolute inset-x-0 top-full z-40 hidden md:hidden bg-surface shadow-lg ring-1 ring-border">
+    <nav class="border-t border-border" aria-label="Mobile navigation">
+      <ul class="divide-y divide-border">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                data-nav-link={link.href}
+                class="flex min-h-11 items-center px-4 text-sm font-medium text-secondary transition-colors hover:bg-primary-light/60 hover:text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a
+            href="tel:+61406917864"
+            class="flex min-h-11 items-center px-4 text-sm font-medium text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+            Call <span class="ml-1">+61 406 917 864</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const toggle = document.getElementById("mobile-menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+    if (!toggle || !menu) return;
+
+    const close = (restoreFocus) => {
+      if (menu.classList.contains("hidden")) return;
+      menu.classList.add("hidden");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.setAttribute("aria-label", "Open menu");
+      if (restoreFocus) toggle.focus();
+    };
+
+    toggle.addEventListener("click", () => {
+      if (menu.classList.contains("hidden")) {
+        menu.classList.remove("hidden");
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-label", "Close menu");
+      } else {
+        close(false);
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !menu.classList.contains("hidden")) close(true);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (
+        !menu.classList.contains("hidden") &&
+        !menu.contains(e.target) &&
+        !toggle.contains(e.target)
+      ) {
+        close(false);
+      }
+    });
+
+    // Active page marker
+    const here = window.location.pathname;
+    document.querySelectorAll("[data-nav-link]").forEach((a) => {
+      const href = a.getAttribute("href");
+      if (href && (href === here || (href !== "/" && here.startsWith(href)))) {
+        a.setAttribute("aria-current", "page");
+        a.classList.add("font-semibold", "text-primary");
+        a.classList.remove("text-secondary");
+      }
+    });
+  })();
+</script>

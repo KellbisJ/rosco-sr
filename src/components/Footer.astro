@@ -24,7 +24,7 @@ const footerLinks = {
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-muted">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-text-muted">
           ROSCO S&R
         </h3>
         <p class="mt-4 text-sm text-secondary">
@@ -32,7 +32,9 @@ const footerLinks = {
           services in Perth, Western Australia.
         </p>
         <p class="mt-2 text-sm text-secondary">
-          <a href="tel:+61406917864" class="hover:text-primary">
+          <a
+            href="tel:+61406917864"
+            class="rounded hover:text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
             +61 406 917 864
           </a>
         </p>
@@ -40,7 +42,7 @@ const footerLinks = {
       {
         Object.entries(footerLinks).map(([category, links]) => (
           <div>
-            <h3 class="text-sm font-semibold uppercase tracking-wider text-muted">
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-text-muted">
               {category}
             </h3>
             <ul class="mt-4 space-y-2" aria-label={`${category} links`}>
@@ -48,7 +50,7 @@ const footerLinks = {
                 <li>
                   <a
                     href={link.href}
-                    class="text-sm text-secondary transition-colors hover:underline">
+                    class="block max-md:py-3 text-sm text-secondary transition-colors hover:underline focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
                     {link.label}
                   </a>
                 </li>
@@ -59,7 +61,7 @@ const footerLinks = {
       }
     </div>
     <div class="mt-12 border-t pt-8 border-border">
-      <p class="text-xs text-center text-muted">
+      <p class="text-xs text-center text-text-muted">
         &copy; {new Date().getFullYear()} ROSCO S&R. All rights reserved. Perth, Western
         Australia.
       </p>

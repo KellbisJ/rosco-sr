@@ -198,7 +198,7 @@ A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on b
 ### Gallery / Work Cards
 - **Corner Style:** Gently curved (16px), fixed 3:4 aspect.
 - **Image:** Object-cover fill, 560ms zoom to 110% on hover, lazy-loaded.
-- **Overlay:** Bottom gradient from 60% black, label in white 600 with drop shadow; gradient intensifies on hover.
+- **Overlay:** Two stacked gradients — a full-card wash (`from-black/80 via-black/25`, resting at 85% opacity, intensifying to 100% on hover) and a bottom-third band (`from-black/75`) that guarantees label contrast ≥4.5:1 even on bright floors. Label in white 600 with drop shadow.
 
 ### Navigation
 - Sticky header, 80% white with backdrop blur and a hairline bottom border.

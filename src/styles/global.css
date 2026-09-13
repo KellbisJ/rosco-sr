@@ -7,6 +7,7 @@
   --color-surface-alt: #f4f4f5; /* Section alternates */
 
   /* Text & Readability */
+  --color-ink: #0f172a; /* Headings, strongest statements */
   --color-text-primary: #0f172a; /* Headings, active states */
   --color-text-secondary: #475569; /* Subtitles, captions */
   --color-text-body: #1e293b; /* Main content text */
@@ -29,7 +30,6 @@
 
   /* Animations */
   --animate-fade-in-up: fade-in-up 0.6s ease-out both;
-  --animate-fade-in-up-delayed: fade-in-up 0.6s ease-out both;
 }
 
 @keyframes fade-in-up {
@@ -53,5 +53,15 @@
       sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
