@@ -26,3 +26,9 @@ pnpm-debug.log*
 .continue/
 
 doc_int/
+
+# Knowledge — for agents and humans, not the runtime
+knowledge/
+
+# Impeccable live-design state (local only, machine-specific)
+.impeccable/
