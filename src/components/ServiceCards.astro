@@ -1,0 +1,53 @@
+---
+import { PaintRoller } from "@lucide/astro";
+import { services } from "../data/services";
+
+interface Props {
+  headingTag?: "h2" | "h3";
+}
+
+const { headingTag: Heading = "h3" } = Astro.props;
+
+const cards = [
+  ...services.map((s) => ({
+    name: s.name,
+    blurb: s.blurb,
+    href: `/services/${s.slug}/`,
+    icon: s.icon,
+  })),
+  {
+    name: "Kitchen & Floor Renovations",
+    blurb: "Kitchens and floors we've renovated around Perth.",
+    href: "/services/#renovations",
+    icon: PaintRoller,
+  },
+];
+---
+
+<ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  {
+    cards.map((card, i) => (
+      <li style={`animation: fade-in-up 0.6s ease-out ${i * 0.1}s both`}>
+        <a
+          href={card.href}
+          class="group flex h-full flex-col rounded-2xl bg-surface p-8 ring-1 ring-border transition-all duration-500 hover:-translate-y-1 hover:shadow-xl focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-primary">
+          <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light text-primary transition-colors duration-500 group-hover:bg-primary group-hover:text-white">
+            <card.icon class="h-6 w-6" aria-hidden="true" />
+          </span>
+          <Heading class="mt-4 text-lg font-semibold leading-6 text-ink">
+            {card.name}
+          </Heading>
+          <p class="mt-2 text-sm leading-6 text-text-subtitle">{card.blurb}</p>
+          <span class="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold leading-6 text-primary">
+            See the details
+            <span
+              class="inline-block transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true">
+              →
+            </span>
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

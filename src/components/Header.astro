@@ -1,12 +1,15 @@
 ---
+import { Phone } from "@lucide/astro";
+import { SITE } from "../site";
+
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "Services", href: "/services/" },
+  { label: "About", href: "/about/" },
+  { label: "Contact", href: "/contact/" },
 ];
 
-const logo = "https://ik.imagekit.io/137/rosco-sr/rosco-sr.png";
+const logo = SITE.logo;
 ---
 
 <header
@@ -15,11 +18,13 @@ const logo = "https://ik.imagekit.io/137/rosco-sr/rosco-sr.png";
     <a
       href="/"
       class="shrink-0 leading-none rounded-md focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
-      aria-label="ROSCO S&R Home">
+      aria-label={`${SITE.name} home`}>
       <img
         src={logo}
-        alt="ROSCO S&R - Professional Strip Out & Removal Services Perth"
-        class="h-10 w-auto object-contain sm:h-12" />
+        alt={`${SITE.name} - Strip Outs & Removals Perth`}
+        width="848"
+        height="249"
+        class="h-9 w-auto object-contain min-[380px]:h-10 sm:h-12" />
     </a>
     <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
       {
@@ -33,10 +38,17 @@ const logo = "https://ik.imagekit.io/137/rosco-sr/rosco-sr.png";
         ))
       }
     </nav>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-1 sm:gap-2">
       <a
-        href="/contact"
-        class="min-h-11 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold text-white bg-primary transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+        href={`tel:${SITE.phoneTel}`}
+        aria-label={`Call ${SITE.phone}`}
+        class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-md px-2 text-sm font-semibold text-primary transition-colors hover:text-primary-hover focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+        <Phone class="h-5 w-5" aria-hidden="true" />
+        <span class="hidden lg:inline">{SITE.phone}</span>
+      </a>
+      <a
+        href="/contact/"
+        class="min-h-11 inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-white bg-primary transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary sm:px-4">
         Get a Quote
       </a>
       <button
@@ -78,9 +90,16 @@ const logo = "https://ik.imagekit.io/137/rosco-sr/rosco-sr.png";
         }
         <li>
           <a
-            href="tel:+61406917864"
+            href={`tel:${SITE.phoneTel}`}
             class="flex min-h-11 items-center px-4 text-sm font-medium text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
-            Call <span class="ml-1">+61 406 917 864</span>
+            Call <span class="ml-1">{SITE.phone}</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href={`sms:${SITE.phoneTel}`}
+            class="flex min-h-11 items-center px-4 text-sm font-medium text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+            Text <span class="ml-1">{SITE.phone}</span>
           </a>
         </li>
       </ul>

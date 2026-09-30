@@ -1,11 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CtaButtons from "../components/CtaButtons.astro";
+import { SITE, photo } from "../site";
 ---
 
 <Layout
-  title="About ROSCO S&R | Perth Strip Out, Removal & Renovation Specialists"
-  description="Learn about ROSCO S&R — strip outs, non-structural demolition, kitchen renovations, floor renovations, bathroom and kitchen removal, and surface preparation across Perth, WA."
->
+  title={`About ${SITE.name} | Strip Outs & Removals Perth`}
+  description={`${SITE.name} is a small Perth crew doing careful strip outs, removals and renovations. Real jobs, real photos. Call or text ${SITE.phone} for a free quote.`}
+  image={photo("4.webp")}
+  imageAlt="Scraping back an old floor on a strip out job in Perth">
   <section class="bg-bg-base py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div
@@ -13,11 +16,11 @@ import Layout from "../layouts/Layout.astro";
         <div class="mx-auto max-w-xl lg:mx-0 lg:max-w-none">
           <h1
             class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
-            About ROSCO S&R
+            About {SITE.name}
           </h1>
           <div class="mt-8 space-y-6 text-lg leading-8 text-text-body">
             <p>
-              At ROSCO S&R, we specialize in meticulous strip outs, kitchen renovations, floor renovations, and careful removal to preserve the integrity of your fixtures and
+              At {SITE.name}, we specialize in meticulous strip outs, kitchen renovations, floor renovations, and careful removal to preserve the integrity of your fixtures and
               furniture. We understand the value of your assets, so we work with
               the utmost precision to ensure everything is removed respectfully
               and intact.
@@ -29,19 +32,15 @@ import Layout from "../layouts/Layout.astro";
               in Perth? Call, email, or send a message for a free quote.
             </p>
           </div>
-          <div class="mt-10 flex gap-x-6">
-            <a
-              href="/contact"
-              class="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white bg-primary transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
-              Contact Us
-            </a>
-          </div>
+          <CtaButtons class="mt-10" />
         </div>
         <div
           class="relative overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
           <img
-            src="https://ik.imagekit.io/137/rosco-sr/9.webp"
-            alt="Work carried out by ROSCO S&R in Perth, Western Australia"
+            src={photo("4.webp")}
+            width="960"
+            height="1280"
+            alt="Scraping back an old floor on a strip out job in Perth"
             class="h-auto w-full object-contain"
             loading="lazy"
           />

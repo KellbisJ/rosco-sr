@@ -16,11 +16,13 @@ pnpm astro ...  # raw astro
 ## Structure
 
 ```
-src/pages/        index, about, services, contact (.astro)
-src/layouts/      Layout.astro — shell, JSON-LD, header/footer mount
-src/components/   Header.astro, Footer.astro
+src/site.ts       business facts (name, phone, email, GA4 id) — single source
+src/data/         services.ts — one entry per service page
+src/pages/        index, about, services, contact, services/[slug] (.astro)
+src/layouts/      Layout.astro — shell, JSON-LD, favicons, GA4, header/footer
+src/components/   Header, Footer, CtaButtons, ServiceCards, HowItWorks, QuoteCta
 src/styles/       global.css — design tokens + Tailwind wiring
-public/           static files (logo, favicon)
+public/           static files (favicon.ico, favicon-96.png, apple-touch-icon.png)
 DESIGN.md         design system truth  (read before UI work)
 PRODUCT.md        product truth        (read before content work)
 knowledge/        agent knowledge packs (gitignored; see routing below)

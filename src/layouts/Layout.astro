@@ -1,56 +1,83 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { SITE, photo } from "../site";
+import { services } from "../data/services";
 import "../styles/global.css";
 
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  image?: string;
+  imageAlt?: string;
+  schema?: Record<string, unknown>[];
+}
+
 const {
-  title = "ROSCO S&R | Strip Out & Removal Services Perth",
-  description = "ROSCO S&R specializes in professional non-structural demolition, strip outs, kitchen renovations, floor renovations, bathroom and kitchen removal, and surface preparation in Perth, WA.",
+  title = `Strip Outs & Removals Perth | ${SITE.name}`,
+  description = `Strip outs, removals and non-structural demolition across Perth, WA. Call or text ${SITE.phone} for a free quote.`,
   canonical = "",
   ogTitle = title,
   ogDescription = description,
+  image = photo("12.webp"),
+  imageAlt = `Surface preparation work by ${SITE.name} in Perth, WA`,
+  schema = [],
 } = Astro.props;
 
-const siteUrl = "https://rosco-sr.com";
 const fullCanonical = canonical
-  ? `${siteUrl}${canonical}`
-  : `${siteUrl}${Astro.url.pathname}`;
+  ? `${SITE.url}${canonical}`
+  : `${SITE.url}${Astro.url.pathname}`;
 
-const jsonLd = {
+const business = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "ROSCO S&R",
+  "@type": "HomeAndConstructionBusiness",
+  "@id": `${SITE.url}/#business`,
+  name: SITE.name,
   description:
-    "Professional non-structural demolition, strip outs, kitchen renovations, floor renovations, bathroom and kitchen removal, and surface preparation in Perth, Western Australia.",
-  url: siteUrl,
+    "Strip outs, non-structural demolition, bathroom and kitchen removal, floor and tile removal, floor grinding, surface preparation, and kitchen and floor renovations in Perth, Western Australia.",
+  url: `${SITE.url}/`,
+  logo: SITE.logo,
+  image: photo("12.webp"),
+  telephone: SITE.phoneTel,
+  email: SITE.email,
   areaServed: {
     "@type": "Place",
     name: "Perth, Western Australia",
   },
-  serviceType: [
-    "Non-Structural Demolition",
-    "Strip Out",
-    "Bathroom Removal",
-    "Kitchen Removal",
-    "Surface Preparation",
-    "Kitchen Renovations",
-    "Floor Renovations",
-    "Concrete Cutting",
-    "Floor Grinding",
-  ],
-  telephone: "+61406917864",
-  email: "rosco.s.r.service@gmail.com",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Perth",
     addressRegion: "WA",
     addressCountry: "AU",
   },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Strip out and removal services",
+    itemListElement: [
+      ...services.map((s) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: s.name,
+          url: `${SITE.url}/services/${s.slug}/`,
+        },
+      })),
+      ...["Kitchen Renovations", "Floor Renovations", "Rubbish Removal"].map(
+        (name) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name },
+        }),
+      ),
+    ],
+  },
 };
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-AU">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -61,27 +88,67 @@ const jsonLd = {
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_AU" />
     <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={ogDescription} />
     <meta property="og:url" content={fullCanonical} />
-    <meta property="og:site_name" content="ROSCO S&R" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content={imageAlt} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={ogTitle} />
     <meta name="twitter:description" content={ogDescription} />
-    <meta name="twitter:image" content="https://ik.imagekit.io/137/rosco-sr/12.webp" />
-
-    <!-- Open Graph image -->
-    <meta property="og:image" content="https://ik.imagekit.io/137/rosco-sr/12.webp" />
-    <meta property="og:image:alt" content="Surface preparation work by ROSCO S&R in Perth, WA" />
+    <meta name="twitter:image" content={image} />
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-      {JSON.stringify(jsonLd)}
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(business)} />
+    {
+      schema.map((item) => (
+        <script type="application/ld+json" set:html={JSON.stringify(item)} />
+      ))
+    }
 
-    <link rel="icon" type="image/png" href="/rosco-sr.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {
+      SITE.gaId && (
+        <>
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}`}
+          />
+          <script is:inline define:vars={{ gaId: SITE.gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function () {
+              dataLayer.push(arguments);
+            };
+            gtag("js", new Date());
+            gtag("config", gaId);
+
+            // Calls, texts and emails are the leads. Mark these events as
+            // key events in GA4, then import them into Google Ads.
+            document.addEventListener("click", (e) => {
+              const link = e.target.closest?.(
+                'a[href^="tel:"], a[href^="sms:"], a[href^="mailto:"]',
+              );
+              if (!link) return;
+              const href = link.getAttribute("href");
+              const event = href.startsWith("tel:")
+                ? "click_to_call"
+                : href.startsWith("sms:")
+                  ? "click_to_text"
+                  : "click_to_email";
+              gtag("event", event, { link_url: href });
+            });
+          </script>
+        </>
+      )
+    }
   </head>
   <body class="bg-bg-base text-text-body min-h-screen flex flex-col">
     <Header />

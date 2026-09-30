@@ -1,53 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import {
-  Building2,
-  Trash2,
-  Truck,
-  Drill,
-  Shovel,
-  Paintbrush,
-} from "@lucide/astro";
-
-interface ServiceItem {
-  title: string;
-  description: string;
-  icon: typeof Building2;
-}
-
-const services: ServiceItem[] = [
-  {
-    title: "Non-Structural Demolition",
-    description:
-      "Complete interior, kitchen, and bathroom strip outs with precision.",
-    icon: Building2,
-  },
-  {
-    title: "Floor & Tile Removal",
-    description: "Specialized removal of tiles, flooring, and adhesives.",
-    icon: Trash2,
-  },
-  {
-    title: "Debris Removal",
-    description: "Efficient clearance of construction waste and rubble.",
-    icon: Truck,
-  },
-  {
-    title: "Concrete Cutting",
-    description: "Diamond core drilling and precise concrete cutting.",
-    icon: Drill,
-  },
-  {
-    title: "Floor Grinding",
-    description: "Concrete grinding and expert crack repair.",
-    icon: Shovel,
-  },
-  {
-    title: "Surface Preparation",
-    description: "Comprehensive prep ready for your next renovation step.",
-    icon: Paintbrush,
-  },
-];
+import ServiceCards from "../components/ServiceCards.astro";
+import { SITE, photo } from "../site";
 
 const reasons = [
   "Clean, precise work focused on efficiency and quality",
@@ -65,118 +19,72 @@ const videos = [
   },
 ];
 
+const kitchen = (id: string, stage: "Before" | "After") => ({
+  src: photo(`Renovations/${id}.jpg`),
+  category: `Kitchen: ${stage}`,
+  alt:
+    stage === "Before"
+      ? "Perth kitchen before renovation, with old cream cabinets and tiles"
+      : "The same Perth kitchen after renovation, with new cabinets and a marble-look splashback",
+});
+
+const floor = (id: string) => ({
+  src: photo(`Renovations/${id}.jpg`),
+  category: "Floor Renovation",
+  alt: "Renovated floor in a Perth home",
+});
+
+// The two kitchen "before" shots and two "after" shots are the same kitchen.
 const renovations = [
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595431.jpg",
-    category: "Floor Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595423.jpg",
-    category: "Kitchen Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595429.jpg",
-    category: "Floor Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595426.jpg",
-    category: "Floor Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595430.jpg",
-    category: "Floor Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595405.jpg",
-    category: "Kitchen Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595428.jpg",
-    category: "Floor Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595427.jpg",
-    category: "Floor Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595422.jpg",
-    category: "Kitchen Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595433.jpg",
-    category: "Floor Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595432.jpg",
-    category: "Floor Renovation",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/Renovations/6257921321014595424.jpg",
-    category: "Kitchen Renovation",
-  },
+  kitchen("6257921321014595423", "Before"),
+  kitchen("6257921321014595424", "Before"),
+  kitchen("6257921321014595405", "After"),
+  kitchen("6257921321014595422", "After"),
+  floor("6257921321014595431"),
+  floor("6257921321014595429"),
+  floor("6257921321014595426"),
+  floor("6257921321014595430"),
+  floor("6257921321014595428"),
+  floor("6257921321014595427"),
+  floor("6257921321014595433"),
+  floor("6257921321014595432"),
 ];
 
-const pageDescription =
-  "ROSCO S&R offers professional strip out, non-structural demolition, kitchen renovations, floor renovations, floor and tile removal, debris removal, concrete cutting, floor grinding, and surface preparation services in Perth, WA.";
+const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile removal, light demolition and floor grinding across Perth. Free quotes. Call or text ${SITE.phone}.`;
 ---
 
 <Layout
-  title="Services | Strip Out, Demolition, Removal & Renovation Perth"
+  title={`Strip Out & Removal Services Perth | ${SITE.name}`}
   description={pageDescription}>
   <!-- Services Section -->
   <section class="bg-surface-alt py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
         <h1 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
-          Our Services
+          Strip Out &amp; Removal Services in Perth
         </h1>
+        <p class="mt-4 text-lg leading-8 text-text-body">
+          Everything that has to come out before the new work goes in. Pick a
+          job to see what's involved.
+        </p>
       </div>
-      <div
-        class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-        {
-          services.map((service, i) => (
-            <article
-              class="group relative flex flex-col overflow-hidden rounded-2xl bg-surface ring-1 ring-border transition-all duration-500 hover:shadow-xl hover:-translate-y-1"
-              style={`animation: fade-in-up 0.6s ease-out ${i * 0.1}s both`}>
-              <div class="relative z-10 flex flex-col p-8 min-h-full">
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light text-primary transition-all duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
-                  <service.icon class="h-6 w-6" />
-                </div>
-                <h3 class="mt-4 text-lg font-semibold leading-6 text-ink">
-                  {service.title}
-                </h3>
-                <p class="mt-2 text-sm leading-6 text-text-subtitle">
-                  {service.description}
-                </p>
-                <div class="mt-auto flex items-center pt-4">
-                  <a
-                    href="/contact"
-                    class="inline-flex items-center gap-2 text-sm font-semibold leading-6 text-primary group/cta">
-                    Get a Free Quote{" "}
-                    <span class="inline-block transition-transform duration-300 group-hover/cta:translate-x-1">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-              <div class="absolute inset-0 z-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/[0.02] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            </article>
-          ))
-        }
+      <div class="mx-auto mt-16 max-w-2xl lg:max-w-none">
+        <ServiceCards headingTag="h2" />
       </div>
     </div>
   </section>
 
   <!-- Renovations Section -->
   <section
-    class="bg-surface-alt py-16 sm:py-24"
+    id="renovations"
+    class="scroll-mt-20 bg-surface-alt py-16 sm:py-24"
     aria-label="Renovations showcase">
     <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center mb-10 sm:mb-16">
       <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
         Renovations
       </h2>
       <p class="mt-4 text-lg leading-8 text-text-body">
-        See the quality of our renovation work
+        Kitchens and floors we've renovated around Perth
       </p>
     </div>
 
@@ -188,7 +96,7 @@ const pageDescription =
             <div class="swiper-slide relative h-full w-full">
               <img
                 src={renovation.src}
-                alt={renovation.category}
+                alt={renovation.alt}
                 class="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
               />
@@ -266,8 +174,8 @@ const pageDescription =
       </div>
       <div class="mt-20 text-center">
         <a
-          href="/contact"
-          class="group inline-flex items-center gap-3 rounded-xl bg-primary px-10 py-5 text-lg font-bold text-white shadow-xl shadow-primary/30 transition-all duration-300 hover:bg-primary-hover hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5">
+          href="/contact/"
+          class="group inline-flex items-center gap-3 rounded-xl bg-primary px-10 py-5 text-lg font-bold text-white shadow-xl shadow-primary/30 transition-all duration-300 hover:bg-primary-hover hover:shadow-2xl hover:shadow-primary/40 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
           Get a Free Quote <span
             class="inline-block transition-transform duration-300 group-hover:translate-x-1">
             →

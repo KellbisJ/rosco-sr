@@ -1,0 +1,198 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import CtaButtons from "../../components/CtaButtons.astro";
+import HowItWorks from "../../components/HowItWorks.astro";
+import QuoteCta from "../../components/QuoteCta.astro";
+import { Check } from "@lucide/astro";
+import { services, type Service } from "../../data/services";
+import { SITE } from "../../site";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props as { service: Service };
+const [heroPhoto, ...morePhotos] = service.photos;
+const others = services.filter((s) => s.slug !== service.slug);
+const pageUrl = `${SITE.url}/services/${service.slug}/`;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.name,
+    serviceType: service.name,
+    url: pageUrl,
+    areaServed: { "@type": "City", name: "Perth" },
+    provider: { "@id": `${SITE.url}/#business` },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE.url}/` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Services",
+        item: `${SITE.url}/services/`,
+      },
+      { "@type": "ListItem", position: 3, name: service.name, item: pageUrl },
+    ],
+  },
+];
+
+const crumbLink =
+  "rounded text-secondary transition-colors hover:text-primary hover:underline focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary";
+---
+
+<Layout
+  title={service.title}
+  description={service.description}
+  image={heroPhoto.src}
+  imageAlt={heroPhoto.alt}
+  schema={schema}>
+  <section class="bg-bg-base py-12 sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Breadcrumb" class="text-sm">
+        <ol class="flex flex-wrap items-center gap-2 text-text-secondary">
+          <li><a href="/" class={crumbLink}>Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href="/services/" class={crumbLink}>Services</a></li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="font-medium text-text-subtitle">
+            {service.name}
+          </li>
+        </ol>
+      </nav>
+      <div
+        class="mt-8 grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-2 lg:items-center">
+        <div class="max-w-xl">
+          <h1 class="text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+            {service.heading}
+          </h1>
+          <p class="mt-6 text-lg leading-8 text-text-body">{service.lead}</p>
+          <CtaButtons class="mt-10" />
+        </div>
+        <figure
+          class="overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
+          <img
+            src={heroPhoto.src}
+            width={heroPhoto.width}
+            height={heroPhoto.height}
+            alt={heroPhoto.alt}
+            fetchpriority="high"
+            class="h-auto max-h-[36rem] w-full object-contain"
+          />
+          <figcaption class="px-5 py-3 text-sm text-text-secondary">
+            {heroPhoto.caption}
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface-alt py-20 sm:py-28" aria-labelledby="scope">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-xl">
+        <h2
+          id="scope"
+          class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          {service.listTitle}
+        </h2>
+        <ul class="mt-8 space-y-4">
+          {
+            service.list.map((item) => (
+              <li class="flex gap-3 text-lg leading-7 text-text-body">
+                <Check
+                  class="mt-1 h-5 w-5 flex-none text-secondary"
+                  aria-hidden="true"
+                />
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {
+    morePhotos.length > 0 ? (
+      <section class="bg-bg-base py-20 sm:py-28" aria-labelledby="more-photos">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-xl text-center">
+            <h2
+              id="more-photos"
+              class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+              From real jobs
+            </h2>
+          </div>
+          <ul
+            class:list={[
+              "mx-auto mt-12 grid grid-cols-1 items-start gap-8",
+              morePhotos.length > 1 ? "max-w-5xl sm:grid-cols-2" : "max-w-xl",
+            ]}>
+            {morePhotos.map((p) => (
+              <li>
+                <figure class="overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
+                  <img
+                    src={p.src}
+                    width={p.width}
+                    height={p.height}
+                    alt={p.alt}
+                    loading="lazy"
+                    decoding="async"
+                    class="h-auto max-h-[32rem] w-full object-contain"
+                  />
+                  <figcaption class="px-5 py-3 text-sm text-text-secondary">
+                    {p.caption}
+                  </figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ) : (
+      <div class="h-px w-full bg-border" />
+    )
+  }
+
+  <HowItWorks />
+
+  <QuoteCta heading={`Need a quote for ${service.name.toLowerCase()}?`} />
+
+  <section class="bg-surface-alt py-16 sm:py-20" aria-labelledby="other-jobs">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2
+        id="other-jobs"
+        class="text-center text-2xl font-bold tracking-tight text-ink">
+        Other jobs we do
+      </h2>
+      <ul class="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-3">
+        {
+          others.map((s) => (
+            <li>
+              <a
+                href={`/services/${s.slug}/`}
+                class="inline-flex min-h-11 items-center rounded-full bg-surface px-5 text-sm font-semibold text-primary ring-1 ring-border transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+                {s.name}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a
+            href="/services/#renovations"
+            class="inline-flex min-h-11 items-center rounded-full bg-surface px-5 text-sm font-semibold text-primary ring-1 ring-border transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+            Kitchen &amp; Floor Renovations
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,43 @@
+---
+const steps = [
+  {
+    title: "Tell us what's coming out",
+    body: "Call, text or send the form. Let us know what's going and when.",
+  },
+  {
+    title: "Get a free quote",
+    body: "We come back with a free, straight quote.",
+  },
+  {
+    title: "We strip it out",
+    body: "It all comes out, the rubbish goes with us, and the place is left clean for the next trade.",
+  },
+];
+---
+
+<section class="bg-surface-alt py-20 sm:py-28" aria-labelledby="how-it-works">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-xl text-center">
+      <h2
+        id="how-it-works"
+        class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+        How it works
+      </h2>
+    </div>
+    <ol class="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3">
+      {
+        steps.map((step, i) => (
+          <li class="rounded-2xl bg-surface p-8 ring-1 ring-border">
+            <p class="text-sm font-semibold text-secondary">Step {i + 1}</p>
+            <h3 class="mt-2 text-lg font-semibold leading-6 text-ink">
+              {step.title}
+            </h3>
+            <p class="mt-2 text-base leading-7 text-text-subtitle">
+              {step.body}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

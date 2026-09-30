@@ -196,17 +196,18 @@ A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on b
 - **Internal Padding:** 32px standard; contact rows compact to 16px×20px.
 
 ### Gallery / Work Cards
-- **Corner Style:** Gently curved (16px), fixed 3:4 aspect.
-- **Image:** Object-cover fill, 560ms zoom to 110% on hover, lazy-loaded.
-- **Overlay:** Two stacked gradients — a full-card wash (`from-black/80 via-black/25`, resting at 85% opacity, intensifying to 100% on hover) and a bottom-third band (`from-black/75`) that guarantees label contrast ≥4.5:1 even on bright floors. Label in white 600 with drop shadow.
+- **Corner Style:** Gently curved (16px), square (1:1) image. The before/after composites are square; 3:4 cropped their baked-in Before/After labels.
+- **Image:** Object-cover fill, 500ms zoom to 110% on hover, lazy-loaded. No darkening overlay: the photo is the proof, shown at full brightness.
+- **Caption:** Below the image on the white card, Ink 600 at 0.875rem. Never over the photo, where it collides with baked-in labels. Service-page figures use the same figure + caption pattern (object-contain, capped height, Fog caption).
 
 ### Navigation
 - Sticky header, 80% white with backdrop blur and a hairline bottom border.
 - Links: 0.875rem, 500 weight, Warm Sand resting, Deep Ocean Blue on hover with underline.
 - The Get a Quote button is a compact primary (6px radius), always visible; mobile collapses links but keeps the button.
+- A call link (phone icon; the number shows from lg up) sits beside it at every width. Phone is the default conversion path.
 
 ### Contact Rows
-- Full-width rows, 16px radius, Washed Concrete fill; hover floods to Deep Ocean Blue Tint with the accent-colored icon. Phone and email rows with right-aligned values.
+- Full-width rows, 16px radius, Washed Concrete fill; hover floods to Deep Ocean Blue Tint with the accent-colored icon. Call, text and email rows: values right-aligned from sm up, stacked under the label on phones so the email never breaks mid-word.
 
 ## Do's and Don'ts
 

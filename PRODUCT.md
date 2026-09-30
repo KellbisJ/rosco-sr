@@ -32,13 +32,15 @@ Confirmed services: non-structural demolition, strip out, kitchen renovations, f
 
 Confirmed assets and integrations: Airtable embed form (appYhEd6T6ITLN80w/paguCaYXO2AOT1gEv), Google Maps embed of Perth, ImageKit CDN for all imagery and video, JSON-LD LocalBusiness schema, sitemap integration, site URL rosco-sr.com.
 
-Contact facts: +61 406 917 864, rosco.s.r.service@gmail.com, based in Perth WA.
+Contact facts: +61 406 917 864, rosco.s.r.service@gmail.com, based in Perth WA. Displayed in local format (0406 917 864); `tel:`/`sms:` links use +61406917864. The owner's flyer says "Call or Text", so texting is a sanctioned channel. All of these live in `src/site.ts`.
 
 Explicitly undecided, do not invent:
 - What the letters "S&R" in the name stand for.
 - Years operating, licensing/insurance credentials — user confirmed the site states none of these; photo evidence only.
 - Whether Instagram/Facebook (@rosco.sr) links come back — currently commented out on the contact page.
 - Pricing, service-area suburb boundaries, response-time promises.
+- Commercial work and public liability insurance: the owner's printed flyer (ImageKit `9.webp`) claims "Residential • Commercial" and "Fully Insured with Public Liability Insurance". The site states neither until the owner confirms.
+- Asbestos handling, and who caps off plumbing/electrical before a strip out.
 
 ## Brand Commitments
 
@@ -49,7 +51,9 @@ Explicitly undecided, do not invent:
 
 ## Evidence on Hand
 
-- 6 real project photos on the home page (strip out, bathroom removal, surface prep) and 12 renovation photos on the services page, all served from ik.imagekit.io/137/rosco-sr/.
+- 6 real project photos on the home page (pergola removal, fireplace mantel removal, wall tile removal, shelving removal, surface prep, room stripped to the slab) and 12 renovation photos on the services page, all served from ik.imagekit.io/137/rosco-sr/.
+- ImageKit `1.webp`–`12.webp` all exist: `7`/`8` are logo files; `9` is the printed flyer (not a job photo — its worker image is not a real job, keep it off the site); `4` (worker scraping a floor) and `10` are used on About and service pages.
+- Renovation photos `…5423` and `…5424` are the BEFORE of the same kitchen as `…5405` and `…5422` (after). Label them that way.
 - 2 on-site demo videos (same CDN).
 - Live Airtable quote form and Google Maps embed on the contact page.
 
