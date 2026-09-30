@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import CtaButtons from "../../components/CtaButtons.astro";
 import HowItWorks from "../../components/HowItWorks.astro";
 import QuoteCta from "../../components/QuoteCta.astro";
+import StripReveal from "../../components/StripReveal.astro";
 import { Check } from "@lucide/astro";
 import { services, type Service } from "../../data/services";
 import { SITE } from "../../site";
@@ -77,20 +78,30 @@ const crumbLink =
           <p class="mt-6 text-lg leading-8 text-text-body">{service.lead}</p>
           <CtaButtons class="mt-10" />
         </div>
-        <figure
-          class="overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
-          <img
-            src={heroPhoto.src}
-            width={heroPhoto.width}
-            height={heroPhoto.height}
-            alt={heroPhoto.alt}
-            fetchpriority="high"
-            class="h-auto max-h-[36rem] w-full object-contain"
-          />
-          <figcaption class="px-5 py-3 text-sm text-text-secondary">
-            {heroPhoto.caption}
-          </figcaption>
-        </figure>
+        {
+          heroPhoto.reveal ? (
+            <StripReveal
+              reveal={heroPhoto.reveal}
+              caption={heroPhoto.caption}
+              eager
+              class="mx-auto w-full max-w-lg"
+            />
+          ) : (
+            <figure class="overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
+              <img
+                src={heroPhoto.src}
+                width={heroPhoto.width}
+                height={heroPhoto.height}
+                alt={heroPhoto.alt}
+                fetchpriority="high"
+                class="h-auto max-h-[36rem] w-full object-contain"
+              />
+              <figcaption class="px-5 py-3 text-sm text-text-secondary">
+                {heroPhoto.caption}
+              </figcaption>
+            </figure>
+          )
+        }
       </div>
     </div>
   </section>
@@ -138,6 +149,13 @@ const crumbLink =
             ]}>
             {morePhotos.map((p) => (
               <li>
+                {p.reveal ? (
+                  <StripReveal
+                    reveal={p.reveal}
+                    caption={p.caption}
+                    class="mx-auto w-full max-w-sm"
+                  />
+                ) : (
                 <figure class="overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
                   <img
                     src={p.src}
@@ -152,6 +170,7 @@ const crumbLink =
                     {p.caption}
                   </figcaption>
                 </figure>
+                )}
               </li>
             ))}
           </ul>

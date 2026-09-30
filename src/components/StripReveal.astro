@@ -1,0 +1,194 @@
+---
+// The signature moment: an amber blade sweeps across the before photo and
+// strips it back to the after, once, when the photo comes into view.
+// Before/After buttons replay it. Starts on "before" (already visible);
+// without JS, a <noscript> rule in Layout shows the after only.
+import type { Reveal } from "../data/services";
+
+interface Props {
+  reveal: Reveal;
+  caption: string;
+  eager?: boolean;
+  class?: string;
+}
+
+const { reveal, caption, eager = false, class: className = "" } = Astro.props;
+
+const hash = [...reveal.before]
+  .reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7)
+  .toString(36);
+const captionId = `strip-${hash}`;
+const loading = eager ? "eager" : "lazy";
+
+const tag =
+  "pointer-events-none absolute left-3 top-3 rounded-full bg-ink/75 px-3 py-1 text-xs font-semibold text-white";
+const button =
+  "min-h-11 rounded-full px-5 text-sm font-semibold text-text-subtitle transition-colors duration-150 hover:text-primary aria-pressed:bg-primary aria-pressed:text-white focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary";
+---
+
+<figure
+  class:list={[
+    "strip-reveal overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 ring-border",
+    className,
+  ]}
+  data-strip
+  data-state="before"
+  aria-labelledby={captionId}>
+  <div
+    class="relative overflow-hidden bg-surface-alt"
+    style={`aspect-ratio: ${reveal.width} / ${reveal.height}`}>
+    <img
+      src={reveal.after}
+      alt={reveal.afterAlt}
+      width={reveal.width}
+      height={reveal.height}
+      loading={loading}
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <span class={tag}>After</span>
+    <div class="sr-before absolute inset-0">
+      <img
+        src={reveal.before}
+        alt={reveal.beforeAlt}
+        width={reveal.width}
+        height={reveal.height}
+        loading={loading}
+        fetchpriority={eager ? "high" : "auto"}
+        decoding="async"
+        class="h-full w-full object-cover"
+      />
+      <span class={tag}>Before</span>
+    </div>
+    <span class="sr-blade" aria-hidden="true"></span>
+  </div>
+  <figcaption
+    class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 px-5 py-3">
+    <span id={captionId} class="text-sm text-text-secondary">{caption}</span>
+    <span
+      class="sr-controls inline-flex rounded-full bg-surface-alt p-1"
+      role="group"
+      aria-label="Compare before and after">
+      <button type="button" data-show="before" aria-pressed="true" class={button}>
+        Before
+      </button>
+      <button type="button" data-show="after" aria-pressed="false" class={button}>
+        After
+      </button>
+    </span>
+  </figcaption>
+</figure>
+
+<style>
+  [data-state="after"] .sr-before {
+    clip-path: inset(0 0 0 100%);
+  }
+
+  /* The blade: a straight amber edge, like a scraper leaving a clean line. */
+  .sr-blade {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .sr-blade::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: -1px;
+    width: 2px;
+    background: var(--color-secondary);
+    box-shadow: 6px 0 16px -2px rgb(15 23 42 / 0.45);
+  }
+</style>
+
+<script>
+  type State = "before" | "after";
+
+  const EASE = "cubic-bezier(0.7, 0, 0.2, 1)";
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  for (const fig of document.querySelectorAll<HTMLElement>("[data-strip]")) {
+    const layer = fig.querySelector<HTMLElement>(".sr-before")!;
+    const blade = fig.querySelector<HTMLElement>(".sr-blade")!;
+    const buttons = fig.querySelectorAll<HTMLButtonElement>("[data-show]");
+    const images = [...fig.querySelectorAll("img")];
+    let running: Animation[] = [];
+    let played = false;
+
+    const mark = (state: State) => {
+      fig.dataset.state = state;
+      buttons.forEach((b) =>
+        b.setAttribute("aria-pressed", String(b.dataset.show === state)),
+      );
+    };
+
+    const show = (state: State, duration: number) => {
+      if (fig.dataset.state === state) return;
+      const live = running.filter((a) => a.playState === "running");
+      mark(state);
+      // Interrupted mid-sweep: run the same sweep back from where it is.
+      if (live.length) {
+        live.forEach((a) => a.reverse());
+        return;
+      }
+      const toAfter = state === "after";
+      if (reduce.matches) {
+        const full = "inset(0 0 0 0)";
+        running = [
+          layer.animate(
+            [
+              { clipPath: full, opacity: toAfter ? 1 : 0 },
+              { clipPath: full, opacity: toAfter ? 0 : 1 },
+            ],
+            { duration: 250, easing: "ease-out" },
+          ),
+        ];
+        return;
+      }
+      const [from, to] = toAfter ? [0, 100] : [100, 0];
+      running = [
+        layer.animate(
+          [
+            { clipPath: `inset(0 0 0 ${from}%)` },
+            { clipPath: `inset(0 0 0 ${to}%)` },
+          ],
+          { duration, easing: EASE },
+        ),
+        blade.animate(
+          [
+            { transform: `translateX(${from}%)`, opacity: 0 },
+            { opacity: 1, offset: 0.08 },
+            { opacity: 1, offset: 0.92 },
+            { transform: `translateX(${to}%)`, opacity: 0 },
+          ],
+          { duration, easing: EASE },
+        ),
+      ];
+    };
+
+    buttons.forEach((b) =>
+      b.addEventListener("click", () => {
+        played = true;
+        io.disconnect();
+        show(b.dataset.show as State, 650);
+      }),
+    );
+
+    // Plays once, when most of the photo is on screen and both halves are ready.
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (played || !entries.some((e) => e.isIntersecting)) return;
+        played = true;
+        io.disconnect();
+        Promise.all(images.map((img) => img.decode().catch(() => {}))).then(() =>
+          setTimeout(() => {
+            if (fig.dataset.state === "before") show("after", 1000);
+          }, 350),
+        );
+      },
+      { threshold: 0.6 },
+    );
+    io.observe(fig);
+  }
+</script>

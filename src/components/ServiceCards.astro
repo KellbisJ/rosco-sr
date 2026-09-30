@@ -1,5 +1,5 @@
 ---
-import { PaintRoller } from "@lucide/astro";
+import { ArrowRight, PaintRoller } from "@lucide/astro";
 import { services } from "../data/services";
 
 interface Props {
@@ -26,11 +26,11 @@ const cards = [
 
 <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
   {
-    cards.map((card, i) => (
-      <li style={`animation: fade-in-up 0.6s ease-out ${i * 0.1}s both`}>
+    cards.map((card) => (
+      <li>
         <a
           href={card.href}
-          class="group flex h-full flex-col rounded-2xl bg-surface p-8 ring-1 ring-border transition-all duration-500 hover:-translate-y-1 hover:shadow-xl focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-primary">
+          class="group flex h-full flex-col rounded-2xl bg-surface p-8 ring-1 ring-border transition-all duration-500 hover:shadow-xl motion-safe:hover:-translate-y-1 active:duration-100 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.99] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-primary">
           <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light text-primary transition-colors duration-500 group-hover:bg-primary group-hover:text-white">
             <card.icon class="h-6 w-6" aria-hidden="true" />
           </span>
@@ -40,11 +40,10 @@ const cards = [
           <p class="mt-2 text-sm leading-6 text-text-subtitle">{card.blurb}</p>
           <span class="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold leading-6 text-primary">
             See the details
-            <span
-              class="inline-block transition-transform duration-300 group-hover:translate-x-1"
-              aria-hidden="true">
-              →
-            </span>
+            <ArrowRight
+              class="h-4 w-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1"
+              aria-hidden="true"
+            />
           </span>
         </a>
       </li>

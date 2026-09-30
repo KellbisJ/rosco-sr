@@ -13,7 +13,7 @@ const logo = SITE.logo;
 ---
 
 <header
-  class="sticky top-0 z-50 w-full border-b bg-surface/80 backdrop-blur-sm border-border">
+  class="sticky top-0 z-50 w-full border-b bg-surface/80 backdrop-blur-sm border-border [view-transition-name:site-header]">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-2 py-2 sm:px-4">
     <a
       href="/"
@@ -48,7 +48,7 @@ const logo = SITE.logo;
       </a>
       <a
         href="/contact/"
-        class="min-h-11 inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-white bg-primary transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary sm:px-4">
+        class="min-h-11 inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-white bg-primary transition duration-150 hover:bg-primary-hover motion-safe:active:scale-[0.97] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary sm:px-4">
         Get a Quote
       </a>
       <button
@@ -107,7 +107,42 @@ const logo = SITE.logo;
   </div>
 </header>
 
+<style is:global>
+  /* The menu fades (and, motion allowing, drops 6px) in; it leaves faster. */
+  #mobile-menu {
+    transition-property: opacity, display;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    transition-behavior: allow-discrete;
+  }
+  #mobile-menu.hidden {
+    opacity: 0;
+    transition-duration: 120ms;
+  }
+  @starting-style {
+    #mobile-menu {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    #mobile-menu {
+      transition-property: opacity, translate, display;
+    }
+    #mobile-menu.hidden {
+      translate: 0 -6px;
+    }
+    @starting-style {
+      #mobile-menu {
+        translate: 0 -6px;
+      }
+    }
+  }
+</style>
+
 <script is:inline>
+  // Lets iOS Safari show :active press states on links and buttons.
+  document.addEventListener("touchstart", () => {}, { passive: true });
+
   (() => {
     const toggle = document.getElementById("mobile-menu-toggle");
     const menu = document.getElementById("mobile-menu");

@@ -114,6 +114,17 @@ const business = {
     <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    <!-- Without JS the strip-back reveal can't play: show the finished job. -->
+    <noscript>
+      <style is:inline>
+        .strip-reveal .sr-before,
+        .strip-reveal .sr-blade,
+        .strip-reveal .sr-controls {
+          display: none;
+        }
+      </style>
+    </noscript>
+
     {
       SITE.gaId && (
         <>

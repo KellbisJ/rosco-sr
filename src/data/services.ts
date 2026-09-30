@@ -1,7 +1,37 @@
 // One entry = one page at /services/<slug>/.
 // Every claim here traces to PRODUCT.md, the flyer, or a real job photo.
 import { Bath, CookingPot, Grid2x2, Hammer, Layers } from "@lucide/astro";
-import { SITE, photo } from "../site";
+import { SITE, crop, photo } from "../site";
+
+// Before and after cut from the same composite and aligned on fixed
+// landmarks (grate and hearth; pot and gate), so the sweep strips back one
+// scene instead of swapping two. Only pairs that genuinely line up go here.
+export interface Reveal {
+  before: string;
+  after: string;
+  beforeAlt: string;
+  afterAlt: string;
+  width: number;
+  height: number;
+}
+
+export const fireplaceReveal: Reveal = {
+  before: crop("6.webp", 137, 407, 466, 466),
+  after: crop("6.webp", 865, 459, 362, 362),
+  beforeAlt: "Timber fireplace mantel with a mirror, before removal, in a Perth home",
+  afterAlt: "The same fireplace after the mantel came off, left intact",
+  width: 466,
+  height: 466,
+};
+
+export const pergolaReveal: Reveal = {
+  before: crop("1.webp", 7, 150, 246, 369),
+  after: crop("1.webp", 461, 150, 311, 467),
+  beforeAlt: "Timber pergola over the side path of a Perth home, before removal",
+  afterAlt: "The same side path with the pergola taken down, open to the sky",
+  width: 246,
+  height: 369,
+};
 
 export interface ServicePhoto {
   src: string;
@@ -9,6 +39,7 @@ export interface ServicePhoto {
   height: number;
   alt: string;
   caption: string;
+  reveal?: Reveal;
 }
 
 export interface Service {
@@ -144,6 +175,7 @@ export const services: Service[] = [
         height: 1280,
         alt: "Before and after of a timber fireplace mantel removed with the fireplace left intact, Perth",
         caption: "Mantel off, fireplace left intact",
+        reveal: fireplaceReveal,
       },
       {
         src: photo("1.webp"),
@@ -151,6 +183,7 @@ export const services: Service[] = [
         height: 800,
         alt: "Before and after of a pergola taken down beside a Perth home",
         caption: "Pergola down and gone",
+        reveal: pergolaReveal,
       },
       {
         src: photo("3.webp"),

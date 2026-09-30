@@ -14,3 +14,8 @@ export const SITE = {
 // Real job photos on ImageKit.
 export const photo = (path: string) =>
   `https://ik.imagekit.io/137/rosco-sr/${path}`;
+
+// A region cut out of a photo — splits the before/after composites into
+// separate, aligned layers for the strip-back reveal.
+export const crop = (path: string, x: number, y: number, w: number, h: number) =>
+  `${photo(path)}?tr=cm-extract,x-${x},y-${y},w-${w},h-${h}`;

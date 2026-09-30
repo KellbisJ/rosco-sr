@@ -177,6 +177,17 @@ A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on b
 - Buttons: **Bluntly rounded** (6px) — small, decisive, tool-like; the large CTA relaxes to 12px.
 - Badges and category tags: **Fully round** pills; gallery tags are glass pills (20% white fill, 30% white border, backdrop blur) over photography.
 
+## Motion
+
+**The Strip-Back Rule.** One authored moment: a straight amber blade (2px Warm Sand, soft offset shadow) sweeps across a real before photo and strips it back to the after, the way a scraper leaves a clean surface. It plays once when the photo is 60% on screen (1000ms, `cubic-bezier(0.7, 0, 0.2, 1)`), and Before/After buttons replay it (650ms), reversing mid-sweep if interrupted. Only on pairs cut from the same composite and aligned on fixed landmarks; photos shot from different spots never get a sweep.
+
+- **No entrances.** Sections and card lists are visible by default and never fade in. The strip-back is the only choreography.
+- **Feedback:** presses scale to 98% in 100ms; hover lifts and arrow nudges are motion-safe only.
+- **Continuity:** pages crossfade (out 160ms, in 260ms, `cubic-bezier(0.16, 1, 0.3, 1)`); the header holds still.
+- **State:** the mobile menu fades and drops 6px in (200ms), leaves in 120ms.
+- **Loops:** the renovations carousel autoplays only while on screen.
+- **Reduced motion:** no sweeps, drift, Ken Burns, carousel autoplay or page transitions. The before/after crossfades (250ms); colour and opacity feedback stay.
+
 ## Components
 
 ### Buttons
@@ -187,6 +198,11 @@ A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on b
 ### Chips
 - **Style:** Fully round; Deep Ocean Blue Tint fill with Ink-blue text, 6px×16px padding, 500 weight.
 - **State:** No unselected state in the current implementation — chips are informational badges, not toggles.
+
+### Strip Reveal
+- **Frame:** square or portrait photo well, 16px corners, hairline ring, Image Ground shadow; caption and Before/After toggle share the footer bar.
+- **Tags:** "Before"/"After" pills top-left in Ink 75% with white text, each riding on its own layer so the blade strips one off as it reveals the other.
+- **Toggle:** pill group, pressed state in Deep Ocean Blue with white text; 44px targets.
 
 ### Cards / Containers
 - **Corner Style:** Gently curved (16px).
