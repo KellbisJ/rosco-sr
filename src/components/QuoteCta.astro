@@ -4,11 +4,13 @@ import CtaButtons from "./CtaButtons.astro";
 interface Props {
   heading: string;
   body?: string;
+  service?: string;
 }
 
 const {
   heading,
   body = "Tell us what's coming out and when. We'll come back with a free, straight quote.",
+  service,
 } = Astro.props;
 ---
 
@@ -19,7 +21,7 @@ const {
         {heading}
       </h2>
       <p class="mt-4 text-lg leading-7 text-text-body">{body}</p>
-      <CtaButtons class="mt-10 justify-center" />
+      <CtaButtons class="mt-10" align="center" service={service} />
     </div>
   </div>
 </section>

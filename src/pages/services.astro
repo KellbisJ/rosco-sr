@@ -1,23 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ServiceCards from "../components/ServiceCards.astro";
-import { ArrowRight } from "@lucide/astro";
-import { SITE, photo } from "../site";
+import HowItWorks from "../components/HowItWorks.astro";
+import QuoteCta from "../components/QuoteCta.astro";
+import StripReveal from "../components/StripReveal.astro";
+import { ArrowRight, Pause, Play } from "@lucide/astro";
+import { pergolaReveal } from "../data/services";
+import { SITE, nb, photo, quoteText, smsHref } from "../site";
 
-const reasons = [
-  "Clean, precise work focused on efficiency and quality",
-  "Professional and punctual service throughout Perth",
-  "Technical approach ensuring safe removal",
-  "Viable options for your renovation project",
-];
+const video = (id: string, caption: string) => ({
+  src: photo(`${id}.mp4`),
+  poster: photo(`${id}.mp4/ik-thumbnail.jpg?tr=so-8,w-640`),
+  caption,
+});
 
+// Captions say only what the footage shows.
 const videos = [
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/video6219997081453470100.mp4",
-  },
-  {
-    src: "https://ik.imagekit.io/137/rosco-sr/video6305415180582919045.mp4",
-  },
+  video("video6219997081453470100", "Breaking up an old tiled floor"),
+  video("video6305415180582919045", "Cutting concrete"),
 ];
 
 const kitchen = (id: string, stage: "Before" | "After") => ({
@@ -52,36 +52,119 @@ const renovations = [
 ];
 
 const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile removal, light demolition and floor grinding across Perth. Free quotes. Call or text ${SITE.phone}.`;
+
+const inlineLink =
+  "rounded font-semibold text-primary underline decoration-primary/30 underline-offset-4 hover:text-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 ---
 
 <Layout
   title={`Strip Out & Removal Services Perth | ${SITE.name}`}
   description={pageDescription}>
-  <!-- Services Section -->
-  <section class="bg-surface-alt py-24 sm:py-32">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+  <section class="bg-surface-alt py-14 sm:py-28" aria-labelledby="services-heading">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
-        <h1 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
-          Strip Out &amp; Removal Services in Perth
+        <h1
+          id="services-heading"
+          class="text-4xl font-bold tracking-tight text-balance text-ink sm:text-5xl">
+          Strip Out&nbsp;&amp; Removal Services in Perth
         </h1>
         <p class="mt-4 text-lg leading-8 text-text-body">
           Everything that has to come out before the new work goes in. Pick a
           job to see what's involved.
         </p>
       </div>
-      <div class="mx-auto mt-16 max-w-2xl lg:max-w-none">
+      <div class="mx-auto mt-12 max-w-2xl lg:max-w-none">
         <ServiceCards headingTag="h2" />
+      </div>
+      <p class="mt-4 text-center text-base leading-7 text-text-body">
+        Not sure which one?{" "}
+        <a href={`tel:${SITE.phoneTel}`} class={inlineLink}>Call</a>{" "}
+        or{" "}
+        <a href={smsHref(quoteText())} class={inlineLink}>text</a>{" "}
+        {SITE.phone} and tell us what's coming out.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-bg-base py-20 sm:py-28" aria-labelledby="pergola">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div class="max-w-xl">
+          <h2
+            id="pergola"
+            class="text-3xl font-bold tracking-tight text-balance text-ink sm:text-4xl">
+            Pergola down. Garden untouched.
+          </h2>
+          <p class="mt-4 text-lg leading-8 text-text-body">
+            We take out what's going and leave what's staying. The fence,
+            paving and garden bed stayed as they were.
+          </p>
+          <a
+            href="/services/non-structural-demolition/"
+            class="group mt-8 inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-semibold text-primary transition-colors hover:text-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            See {nb("non-structural")} demolition
+            <ArrowRight
+              class="h-4 w-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </a>
+        </div>
+        <StripReveal
+          reveal={pergolaReveal}
+          caption="Pergola down and gone"
+          class="mx-auto w-full max-w-sm"
+        />
       </div>
     </div>
   </section>
 
-  <!-- Renovations Section -->
+  <div class="h-px w-full bg-border"></div>
+
+  <section class="bg-bg-base py-20 sm:py-28" aria-labelledby="in-action">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2
+          id="in-action"
+          class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          See our work in action
+        </h2>
+        <p class="mt-4 text-lg leading-8 text-text-body">
+          Real footage from recent jobs across Perth.
+        </p>
+      </div>
+      <ul class="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-3 sm:gap-8">
+        {
+          videos.map((v) => (
+            <li>
+              <figure class="overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 ring-border">
+                <video
+                  src={v.src}
+                  poster={v.poster}
+                  aria-label={v.caption}
+                  class="block aspect-[9/16] w-full bg-ink object-cover"
+                  controls
+                  playsinline
+                  preload="none"
+                />
+                <figcaption class="px-3 py-3 text-sm font-semibold text-ink sm:px-5">
+                  {v.caption}
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <section
     id="renovations"
     class="scroll-mt-20 bg-surface-alt py-16 sm:py-24"
-    aria-label="Renovations showcase">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8 text-center mb-10 sm:mb-16">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
+    aria-labelledby="renovations-heading">
+    <div class="mx-auto mb-10 max-w-7xl px-6 text-center sm:mb-16 lg:px-8">
+      <h2
+        id="renovations-heading"
+        class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
         Renovations
       </h2>
       <p class="mt-4 text-lg leading-8 text-text-body">
@@ -90,7 +173,7 @@ const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile re
     </div>
 
     <div
-      class="swiper renovations-swiper h-[70vh] sm:h-[80vh] lg:h-[85vh] min-h-[400px] w-full lg:w-3xl shadow-2xl lg:rounded-xl">
+      class="swiper renovations-swiper h-[70vh] min-h-[400px] w-full shadow-2xl sm:h-[80vh] lg:h-[85vh] lg:w-3xl lg:rounded-xl">
       <div class="swiper-wrapper">
         {
           renovations.map((renovation) => (
@@ -101,12 +184,9 @@ const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile re
                 class="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-16">
-                <span class="inline-block rounded-full bg-white/20 backdrop-blur-md px-4 py-2 text-sm font-semibold text-white border border-white/30">
-                  {renovation.category}
-                </span>
-              </div>
+              <span class="slide-tag absolute left-4 top-4 rounded-full bg-ink/75 px-3 py-1 text-sm font-semibold text-white">
+                {renovation.category}
+              </span>
             </div>
           ))
         }
@@ -114,76 +194,23 @@ const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile re
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
       <div class="swiper-pagination"></div>
+      <button
+        type="button"
+        class="slideshow-toggle group absolute bottom-4 left-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-ink/75 text-white transition-colors hover:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        aria-label="Pause slideshow"
+        hidden>
+        <Pause class="h-4 w-4 group-data-[paused=true]:hidden" aria-hidden="true" />
+        <Play
+          class="hidden h-4 w-4 group-data-[paused=true]:block"
+          aria-hidden="true"
+        />
+      </button>
     </div>
   </section>
 
-  <!-- Why Choose Us Section -->
-  <section class="bg-bg-base py-24 sm:py-32" aria-label="Why choose us">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
-          Why Choose Us?
-        </h2>
-        <dl
-          class="mx-auto mt-10 grid max-w-xl gap-6 sm:grid-cols-2 lg:max-w-none lg:grid-cols-4">
-          {
-            reasons.map((reason) => (
-              <div class="flex flex-col items-center rounded-2xl bg-surface p-6 ring-1 ring-border">
-                <dt class="text-sm font-semibold leading-6 text-ink">
-                  {reason}
-                </dt>
-              </div>
-            ))
-          }
-        </dl>
-      </div>
-    </div>
-  </section>
+  <HowItWorks />
 
-  <div class="h-px w-full bg-border"></div>
-
-  <!-- Video Section -->
-  <section class="bg-bg-base py-24 sm:py-32" aria-label="Video showcase">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
-          See Our Work in Action
-        </h2>
-        <p class="mt-4 text-lg leading-8 text-text-body">
-          Watch real footage from our recent projects across Perth.
-        </p>
-      </div>
-      <div
-        class="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2 lg:mx-0 lg:max-w-none">
-        {
-          videos.map((video) => (
-            <div class="flex flex-col items-center gap-4">
-              <div class="relative w-full max-w-xs aspect-[9/16] overflow-hidden rounded-2xl bg-[#111827] shadow-lg ring-1 ring-border">
-                <video
-                  src={video.src}
-                  class="absolute inset-0 h-full w-full object-cover"
-                  controls
-                  playsinline
-                  preload="none"
-                />
-              </div>
-            </div>
-          ))
-        }
-      </div>
-      <div class="mt-20 text-center">
-        <a
-          href="/contact/"
-          class="group inline-flex items-center gap-3 rounded-xl bg-primary px-10 py-5 text-lg font-bold text-white shadow-xl shadow-primary/30 transition-all duration-300 hover:bg-primary-hover hover:shadow-2xl hover:shadow-primary/40 motion-safe:hover:-translate-y-0.5 active:duration-100 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.98] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
-          Get a Free Quote
-          <ArrowRight
-            class="h-5 w-5 transition-transform duration-300 motion-safe:group-hover:translate-x-1"
-            aria-hidden="true"
-          />
-        </a>
-      </div>
-    </div>
-  </section>
+  <QuoteCta heading="Got a job that needs stripping out?" />
 </Layout>
 
 <style is:global>
@@ -196,7 +223,7 @@ const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile re
   .renovations-swiper .swiper-button-next {
     width: 44px;
     height: 44px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(15, 23, 42, 0.55);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 9999px;
@@ -205,18 +232,18 @@ const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile re
       background 0.3s ease,
       transform 0.3s ease;
   }
-  .renovations-swiper .swiper-button-prev:active,
-  .renovations-swiper .swiper-button-next:active {
-    transition-duration: 0.1s;
-  }
-  .renovations-swiper .swiper-button-prev::after,
-  .renovations-swiper .swiper-button-next::after {
-    font-size: 16px;
-    font-weight: bold;
+  .renovations-swiper .swiper-button-prev svg,
+  .renovations-swiper .swiper-button-next svg {
+    width: 16px;
+    height: 16px;
   }
   .renovations-swiper .swiper-button-prev:hover,
   .renovations-swiper .swiper-button-next:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(15, 23, 42, 0.8);
+  }
+  .renovations-swiper .swiper-button-prev:active,
+  .renovations-swiper .swiper-button-next:active {
+    transition-duration: 0.1s;
   }
   @media (prefers-reduced-motion: no-preference) {
     .renovations-swiper .swiper-button-prev:hover,
@@ -228,24 +255,24 @@ const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile re
       transform: scale(0.95);
     }
   }
+  /* Before Swiper starts (or without JS) the arrows can't work: hide them. */
+  .renovations-swiper:not(.swiper-initialized) .swiper-button-prev,
+  .renovations-swiper:not(.swiper-initialized) .swiper-button-next {
+    display: none;
+  }
 
-  .renovations-swiper .swiper-pagination {
-    bottom: 20px !important;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-  }
-  .renovations-swiper .swiper-pagination-bullet {
-    width: 10px;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.5);
-    opacity: 1;
+  /* "3 / 12" instead of twelve 10px dots. */
+  .renovations-swiper .swiper-pagination.swiper-pagination-fraction {
+    left: auto;
+    right: 16px;
+    bottom: 16px;
+    width: auto;
+    padding: 4px 12px;
     border-radius: 9999px;
-    transition: all 0.3s ease;
-  }
-  .renovations-swiper .swiper-pagination-bullet-active {
-    width: 30px;
-    background: white;
+    background: rgba(15, 23, 42, 0.75);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
   }
 
   /* Cinematic effect kenburns */
@@ -261,23 +288,24 @@ const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile re
     animation: kenburns 4.5s ease-out forwards;
   }
 
-  /*  Text Reveal (reduced motion: fade only) */
-  .renovations-swiper .swiper-slide .absolute.bottom-0 span {
+  /* Tag reveal on the active slide. Visible by default (no JS); fade only
+     under reduced motion. */
+  .renovations-swiper.swiper-initialized .slide-tag {
     opacity: 0;
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .renovations-swiper .swiper-slide-active .absolute.bottom-0 span {
+  .renovations-swiper.swiper-initialized .swiper-slide-active .slide-tag {
     opacity: 1;
     transition-delay: 0.3s;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .renovations-swiper .swiper-slide .absolute.bottom-0 span {
-      transform: translateY(30px);
+    .renovations-swiper.swiper-initialized .slide-tag {
+      transform: translateY(12px);
       transition:
         opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
         transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .renovations-swiper .swiper-slide-active .absolute.bottom-0 span {
+    .renovations-swiper.swiper-initialized .swiper-slide-active .slide-tag {
       transform: translateY(0);
     }
   }
@@ -301,19 +329,36 @@ const pageDescription = `Bathroom strip outs, kitchen removal, floor and tile re
           pauseOnMouseEnter: false,
         },
     keyboard: { enabled: true, onlyInViewport: true },
-    pagination: { el: ".swiper-pagination", clickable: true },
+    pagination: { el: ".swiper-pagination", type: "fraction" },
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
   });
 
-  // Autoplay is a loop: only run it while the slider is on screen.
-  const slider = document.querySelector(".renovations-swiper");
-  if (!reduce && slider) {
-    new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) swiper.autoplay.start();
+  // Autoplay is a loop: it runs only while on screen and until paused.
+  const slider = document.querySelector<HTMLElement>(".renovations-swiper");
+  const toggle = document.querySelector<HTMLButtonElement>(".slideshow-toggle");
+  if (!reduce && slider && toggle) {
+    let paused = false;
+    let onScreen = false;
+    const sync = () => {
+      if (onScreen && !paused) swiper.autoplay.start();
       else swiper.autoplay.stop();
+      toggle.dataset.paused = String(paused);
+      toggle.setAttribute(
+        "aria-label",
+        paused ? "Play slideshow" : "Pause slideshow",
+      );
+    };
+    toggle.hidden = false;
+    toggle.addEventListener("click", () => {
+      paused = !paused;
+      sync();
+    });
+    new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      sync();
     }).observe(slider);
   }
 </script>

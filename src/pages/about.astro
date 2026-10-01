@@ -1,51 +1,75 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CtaButtons from "../components/CtaButtons.astro";
+import QuoteCta from "../components/QuoteCta.astro";
+import StripReveal from "../components/StripReveal.astro";
+import { fireplaceReveal } from "../data/services";
 import { SITE, photo } from "../site";
 ---
 
 <Layout
   title={`About ${SITE.name} | Strip Outs & Removals Perth`}
-  description={`${SITE.name} is a small Perth crew doing careful strip outs, removals and renovations. Real jobs, real photos. Call or text ${SITE.phone} for a free quote.`}
+  description={`${SITE.name} is a small Perth business doing careful strip outs, removals and renovations. Real jobs, real photos. Call or text ${SITE.phone} for a free quote.`}
   image={photo("4.webp")}
   imageAlt="Scraping back an old floor on a strip out job in Perth">
-  <section class="bg-bg-base py-24 sm:py-32">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+  <section class="bg-bg-base py-12 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div
-        class="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:items-start">
-        <div class="mx-auto max-w-xl lg:mx-0 lg:max-w-none">
-          <h1
-            class="text-3xl font-bold tracking-tight sm:text-4xl text-ink">
-            About {SITE.name}
+        class="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2 sm:items-start">
+        <div class="max-w-xl">
+          <h1 class="text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+            About <span class="sm:whitespace-nowrap">{SITE.name}</span>
           </h1>
-          <div class="mt-8 space-y-6 text-lg leading-8 text-text-body">
+          <div class="mt-6 space-y-5 text-lg leading-8 text-text-body">
             <p>
-              At {SITE.name}, we specialize in meticulous strip outs, kitchen renovations, floor renovations, and careful removal to preserve the integrity of your fixtures and
-              furniture. We understand the value of your assets, so we work with
-              the utmost precision to ensure everything is removed respectfully
-              and intact.
+              {SITE.name} is a small Perth business doing strip outs, removals and
+              non-structural demolition, plus kitchen and floor renovations.
             </p>
             <p>
-              Need a room stripped out or a site cleared before the next trade
-              starts? We work with precision and care, and we leave the place
-              clean and ready for your next step. Ready to transform your space
-              in Perth? Call, email, or send a message for a free quote.
+              We take out what's going and leave what's staying. The fixtures and
+              furniture that stay are treated with care, and whatever comes out
+              goes with us.
             </p>
+            <p>When we're done, the place is left clean and ready for the next trade.</p>
           </div>
-          <CtaButtons class="mt-10" />
+          <CtaButtons class="mt-8" />
         </div>
         <div
-          class="relative overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
+          class="overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
           <img
             src={photo("4.webp")}
             width="960"
             height="1280"
             alt="Scraping back an old floor on a strip out job in Perth"
-            class="h-auto w-full object-contain"
-            loading="lazy"
+            class="block h-auto w-full"
           />
         </div>
       </div>
     </div>
   </section>
+
+  <section class="bg-surface-alt py-20 sm:py-28" aria-labelledby="left-intact">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div class="max-w-xl">
+          <h2
+            id="left-intact"
+            class="text-3xl font-bold tracking-tight text-balance text-ink sm:text-4xl">
+            Mantel off. Fireplace intact.
+          </h2>
+          <p class="mt-4 text-lg leading-8 text-text-body">
+            What "leave what's staying" looks like on a real job. Same
+            fireplace, same spot. Only the mantel is gone.
+          </p>
+        </div>
+        <StripReveal
+          reveal={fireplaceReveal}
+          caption="Timber mantel removed, Perth"
+          class="mx-auto w-full max-w-md"
+        />
+      </div>
+    </div>
+  </section>
+
+  <QuoteCta heading="Need a room stripped out before the work starts?" />
 </Layout>

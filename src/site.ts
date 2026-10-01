@@ -11,6 +11,18 @@ export const SITE = {
   gaId: "",
 };
 
+// Text-message link with an optional starter message. iOS and Android both
+// read "?&body=" after the number.
+export const smsHref = (body = "") =>
+  `sms:${SITE.phoneTel}${body ? `?&body=${encodeURIComponent(body)}` : ""}`;
+
+export const quoteText = (what = "") =>
+  `Hi, I'd like a free quote${what ? ` for ${what}` : ""}. What's coming out: `;
+
+// Display only: keeps "Non-Structural" from breaking at the hyphen.
+// Titles, meta and JSON-LD keep the plain hyphen for search.
+export const nb = (text: string) => text.replaceAll("-", "‑");
+
 // Real job photos on ImageKit.
 export const photo = (path: string) =>
   `https://ik.imagekit.io/137/rosco-sr/${path}`;

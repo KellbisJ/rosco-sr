@@ -1,37 +1,62 @@
 ---
-import { ArrowRight, Phone } from "@lucide/astro";
-import { SITE } from "../site";
+// Phone is the default way in. On phones: Call and Text are the buttons and
+// the form is a link. On larger screens the quote form leads, number beside.
+import { ArrowRight, MessageSquareText, Phone } from "@lucide/astro";
+import { SITE, quoteText, smsHref } from "../site";
 
 interface Props {
-  onDark?: boolean;
+  // e.g. "bathroom strip outs" — starts the text message for them.
+  service?: string;
+  align?: "start" | "center";
   class?: string;
 }
 
-const { onDark = false, class: className = "" } = Astro.props;
+const { service, align = "start", class: className = "" } = Astro.props;
+const center = align === "center";
+
+const solid =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/30 motion-safe:hover:-translate-y-0.5 active:duration-100 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+const outline =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-surface px-6 py-3 text-sm font-semibold text-primary ring-1 ring-primary/30 transition-all duration-150 hover:bg-primary-light hover:ring-primary motion-safe:active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+const link =
+  "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-sm font-semibold text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:text-primary-hover hover:decoration-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 ---
 
-<div class:list={["flex flex-wrap items-center gap-x-6 gap-y-4", className]}>
-  <a
-    href="/contact/"
-    class:list={[
-      "group inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/30 motion-safe:hover:-translate-y-0.5 active:duration-100 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.98] focus-visible:outline focus-visible:outline-offset-2",
-      onDark ? "focus-visible:outline-white" : "focus-visible:outline-primary",
-    ]}>
-    Get a Free Quote
-    <ArrowRight
-      class="h-4 w-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1"
-      aria-hidden="true"
-    />
+<div
+  class:list={[
+    "flex flex-col gap-3",
+    center ? "items-center" : "items-start",
+    className,
+  ]}>
+  <div class="flex w-full max-w-sm flex-col gap-3 sm:hidden">
+    <a href={`tel:${SITE.phoneTel}`} class:list={[solid, "w-full"]}>
+      <Phone class="h-4 w-4" aria-hidden="true" />
+      Call {SITE.phone}
+    </a>
+    <a href={smsHref(quoteText(service))} class:list={[outline, "w-full"]}>
+      <MessageSquareText class="h-4 w-4" aria-hidden="true" />
+      Text us
+    </a>
+  </div>
+  <a href="/contact/#quote-form" class:list={[link, "sm:hidden"]}>
+    Or send the details online
   </a>
-  <a
-    href={`tel:${SITE.phoneTel}`}
+
+  <div
     class:list={[
-      "inline-flex min-h-11 items-center gap-2 rounded-md px-1 text-sm font-semibold underline underline-offset-4 transition-colors focus-visible:outline focus-visible:outline-offset-2",
-      onDark
-        ? "text-white decoration-white/40 hover:text-primary-light focus-visible:outline-white"
-        : "text-primary decoration-primary/30 hover:text-primary-hover focus-visible:outline-primary",
+      "hidden flex-wrap items-center gap-x-6 gap-y-4 sm:flex",
+      center && "justify-center",
     ]}>
-    <Phone class="h-4 w-4" aria-hidden="true" />
-    Call or text {SITE.phone}
-  </a>
+    <a href="/contact/#quote-form" class:list={[solid, "group"]}>
+      Get a Free Quote
+      <ArrowRight
+        class="h-4 w-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1"
+        aria-hidden="true"
+      />
+    </a>
+    <a href={`tel:${SITE.phoneTel}`} class={link}>
+      <Phone class="h-4 w-4" aria-hidden="true" />
+      Call {SITE.phone}
+    </a>
+  </div>
 </div>

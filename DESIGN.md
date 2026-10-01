@@ -107,12 +107,12 @@ The moment a room is stripped bare, swept, and ready for what comes next. The si
 A cool off-white stage with one deep, confident accent and one warm, secondary voice. Blue acts, amber accompanies, neutrals carry the content.
 
 ### Primary
-- **Deep Ocean Blue** (#0c4a6e): The action color. Buttons, active states, links-to-quote, icon tiles on hover. Reserved for things the visitor can do or where the business proves itself.
+- **Deep Ocean Blue** (#0c4a6e): The action color. Buttons, active states, links-to-quote, the pressed Before/After toggle. Reserved for things the visitor can do or where the business proves itself.
 - **Deep Ocean Blue Hover** (#083344): Pressed or hovered actions; deepens the commitment.
-- **Deep Ocean Blue Tint** (#e0f2fe): Icon tile backgrounds, pill badges, soft attention states. Blue diluted to a whisper.
+- **Deep Ocean Blue Tint** (#e0f2fe): Pill badges, hover floods on outline buttons, text selection, soft attention states. Blue diluted to a whisper.
 
 ### Secondary
-- **Warm Sand** (#b45309): Accompanying voice. Nav links in the header, footer descriptive text, anywhere blue would over-signal.
+- **Warm Sand** (#b45309): Accompanying voice. Nav and footer links, breadcrumb links, step numbers, the strip-reveal blade, anywhere blue would over-signal. Never on plain descriptive text, which would read as a link.
 - **Warm Sand Hover** (#92400e): Hover for amber text.
 - **Warm Sand Tint** (#fef3c7): Highlights and secondary light backgrounds (reserved, rarely seen in current implementation).
 
@@ -123,8 +123,8 @@ A cool off-white stage with one deep, confident accent and one warm, secondary v
 - **Ink** (#0f172a): Heading text, strongest statements.
 - **Slate** (#1e293b): Body text.
 - **Dusk** (#334155): Subtitles and secondary descriptions.
-- **Fog** (#475569): Captions and supporting text.
-- **Mist** (#94a3b8): Placeholders, micro-captions, copyright.
+- **Fog** (#475569): Captions, supporting text, footer headings and copyright (7.6:1 on white).
+- **Mist** (#94a3b8): Placeholders and disabled states only. At 2.6:1 on white it fails AA, so never for readable text.
 - **Hairline** (#e4e4e7): Dividers, input strokes, card rings.
 - **Hairline Strong** (#d4d4d8): Focus rings and emphasis borders.
 
@@ -138,7 +138,7 @@ A cool off-white stage with one deep, confident accent and one warm, secondary v
 **Character:** No imported display face. The type is the operating system's own sturdy sans, which reads as born-on-the-job rather than designed-for-the-brochure. Hierarchy comes from scale and weight contrast (700 vs 400), not from a second voice.
 
 ### Hierarchy
-- **Display** (700, clamp(2.25rem, 5vw, 3.75rem), 1.1, -0.025em tracking): The hero statement. Home page only, one per page.
+- **Display** (700, clamp(2.25rem, 5vw, 3.75rem), 1.1, -0.025em tracking): The hero statement. Home page only, one per page. H1s are Title Case (they echo what people search: "Bathroom Strip Outs in Perth"); every heading below is sentence case. Headings are `text-wrap: balance`, and display names keep "Non‑Structural" on one line with a non-breaking hyphen (U+2011) — titles, meta and JSON-LD keep the plain hyphen.
 - **Headline** (700, clamp(1.875rem, 3.5vw, 2.25rem), 1.2, -0.025em tracking): Section openers. Centered with a max-width of ~36rem when the section is symmetric.
 - **Title** (600, 1.125rem, 1.5): Card titles, service names, direct-contact headings.
 - **Body** (400, 1.125rem, 1.75): Reading copy, 60–70 characters ideal, max ~38rem centered.
@@ -171,7 +171,7 @@ Flat by default. Depth is conveyed by tonal layering (white cards on washed or b
 
 ## Shapes
 
-A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on buttons, 12px on icon tiles, fully round pills for badges and category tags. Hairline rings (`1px`, border color) are the standard edge treatment — borders define cards more than shadows do.
+A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on buttons, 12px on large CTAs and service-card thumbnails, fully round pills for badges and category tags. Hairline rings (`1px`, border color) are the standard edge treatment — borders define cards more than shadows do.
 
 - Cards and containers: **Gently curved** (16px), hairline ring, no double borders at joints — adjacent sections share backgrounds instead of stacking cards.
 - Buttons: **Bluntly rounded** (6px) — small, decisive, tool-like; the large CTA relaxes to 12px.
@@ -193,7 +193,8 @@ A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on b
 ### Buttons
 - **Shape:** Bluntly rounded (6px); the large CTA relaxes to 12px.
 - **Primary:** Deep Ocean Blue background, white text, 16px×24px padding; large variant 12px×24px with a tinted CTA glow shadow and a 2px hover lift.
-- **Hover / Focus:** Hover deepens to #083344 (300ms transition); focus-visible draws a strong hairline outline in the accent color with 8px offset. The arrow in large CTAs shifts right 4px on hover.
+- **Hover / Focus:** Hover deepens to #083344 (300ms transition); focus-visible draws a 2px outline in the accent color with a 2px offset (4px on cards). The arrow in large CTAs is a drawn ArrowRight icon that shifts right 4px on hover.
+- **The Phone-First Pair.** On phones the call to action is two full-width buttons — **Call** (solid, with the number) and **Text us** (outline, opens a message that starts "Hi, I'd like a free quote for …") — with "Or send the details online" as a text link. From sm up, **Get a Free Quote** leads and "Call 0406 917 864" sits beside it. One component (`CtaButtons`) everywhere; quote links go to `/contact/#quote-form`.
 
 ### Chips
 - **Style:** Fully round; Deep Ocean Blue Tint fill with Ink-blue text, 6px×16px padding, 500 weight.
@@ -207,6 +208,7 @@ A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on b
 ### Cards / Containers
 - **Corner Style:** Gently curved (16px).
 - **Background:** Pure White on Bone or Washed Concrete grounds.
+- **Service cards** lead with a real job photo, never an icon: 4:3 photo over title, blurb and "See the details" from sm up; on phones a compact row (80px square photo, title, blurb, arrow). Five cards; the last row centres. Renovations are a one-line aside under the grid, not a sixth card.
 - **Shadow Strategy:** Flat at rest (hairline ring only); xl shadow + 4px lift on hover (300–500ms).
 - **Border:** 1px hairline ring in border color.
 - **Internal Padding:** 32px standard; contact rows compact to 16px×20px.
@@ -214,16 +216,22 @@ A soft, handheld vocabulary: 16px corners on cards and form containers, 6px on b
 ### Gallery / Work Cards
 - **Corner Style:** Gently curved (16px), square (1:1) image. The before/after composites are square; 3:4 cropped their baked-in Before/After labels.
 - **Image:** Object-cover fill, 500ms zoom to 110% on hover, lazy-loaded. No darkening overlay: the photo is the proof, shown at full brightness.
-- **Caption:** Below the image on the white card, Ink 600 at 0.875rem. Never over the photo, where it collides with baked-in labels. Service-page figures use the same figure + caption pattern (object-contain, capped height, Fog caption).
+- **Caption:** Below the image on the white card, Ink 600 at 0.875rem. Never over the photo, where it collides with baked-in labels. Two columns on phones, three from lg. The app collages are trimmed at the bottom (ImageKit crop) to drop the "PhotoGrid" watermark.
+- **Service-page figures** hug the photo's own shape (`w-fit`, capped height) so portrait shots never float in a column-wide grey box; a same-room pair sits side by side with Before/After tags.
 
 ### Navigation
 - Sticky header, 80% white with backdrop blur and a hairline bottom border.
 - Links: 0.875rem, 500 weight, Warm Sand resting, Deep Ocean Blue on hover with underline.
-- The Get a Quote button is a compact primary (6px radius), always visible; mobile collapses links but keeps the button.
+- The Get a Quote button is a compact primary (6px radius), always visible, linking to the form; mobile collapses links but keeps the button.
 - A call link (phone icon; the number shows from lg up) sits beside it at every width. Phone is the default conversion path.
+- The current page is marked at build time (works without JS). The menu icon becomes a close icon while open; without JS the menu button is hidden (the footer lists every page). The bar wraps rather than overflowing at 200% text.
 
-### Contact Rows
-- Full-width rows, 16px radius, Washed Concrete fill; hover floods to Deep Ocean Blue Tint with the accent-colored icon. Call, text and email rows: values right-aligned from sm up, stacked under the label on phones so the email never breaks mid-word.
+### Contact Page
+- **Call** is the one solid, full-width button with the number at 18px bold; **Text us** is the outline button below it; email is a text link. A compact "What happens next" list sits under them.
+- The quote form is the fallback ("Rather type it out?"), framed at the form's full height so only the page scrolls, with "Loading the form…" behind it and an always-visible "Open it in a new tab or text us" line. No decorative map.
+
+### Renovations Carousel
+- Photos at full brightness: no gradient. Category on an Ink 75% pill top-left; position as a "3 / 12" pill bottom-right; a 44px pause/play button bottom-left. Autoplay runs only on screen and stops for good when paused; off under reduced motion. Without JS the tags show and the arrows hide.
 
 ## Do's and Don'ts
 

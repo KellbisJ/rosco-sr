@@ -1,6 +1,6 @@
 ---
-import { Phone } from "@lucide/astro";
-import { SITE } from "../site";
+import { Menu, Phone, X } from "@lucide/astro";
+import { SITE, quoteText, smsHref } from "../site";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -10,14 +10,21 @@ const navLinks = [
 ];
 
 const logo = SITE.logo;
+
+// Marked at build time, so it works without JS.
+const here = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? here === "/" : here.startsWith(href);
+const navClass = (href: string) =>
+  isActive(href) ? "font-semibold text-primary" : "text-secondary";
 ---
 
 <header
   class="sticky top-0 z-50 w-full border-b bg-surface/80 backdrop-blur-sm border-border [view-transition-name:site-header]">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-2 py-2 sm:px-4">
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-y-1 px-2 py-2 sm:px-4">
     <a
       href="/"
-      class="shrink-0 leading-none rounded-md focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+      class="inline-flex min-h-11 shrink-0 items-center leading-none rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       aria-label={`${SITE.name} home`}>
       <img
         src={logo}
@@ -31,8 +38,11 @@ const logo = SITE.logo;
         navLinks.map((link) => (
           <a
             href={link.href}
-            data-nav-link={link.href}
-            class="inline-flex items-center rounded-md px-1 py-2 text-sm font-medium text-secondary transition-colors hover:text-primary hover:underline focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+            aria-current={isActive(link.href) ? "page" : undefined}
+            class:list={[
+              "inline-flex items-center rounded-md px-1 py-2 text-sm font-medium transition-colors hover:text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+              navClass(link.href),
+            ]}>
             {link.label}
           </a>
         ))
@@ -42,32 +52,24 @@ const logo = SITE.logo;
       <a
         href={`tel:${SITE.phoneTel}`}
         aria-label={`Call ${SITE.phone}`}
-        class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-md px-2 text-sm font-semibold text-primary transition-colors hover:text-primary-hover focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+        class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-md px-2 text-sm font-semibold text-primary transition-colors hover:text-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
         <Phone class="h-5 w-5" aria-hidden="true" />
         <span class="hidden lg:inline">{SITE.phone}</span>
       </a>
       <a
-        href="/contact/"
-        class="min-h-11 inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-white bg-primary transition duration-150 hover:bg-primary-hover motion-safe:active:scale-[0.97] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary sm:px-4">
+        href="/contact/#quote-form"
+        class="min-h-11 inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-semibold text-white bg-primary transition duration-150 hover:bg-primary-hover motion-safe:active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:px-4">
         Get a Quote
       </a>
       <button
         type="button"
         id="mobile-menu-toggle"
-        class="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-md text-secondary transition-colors hover:text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
+        class="group md:hidden inline-flex h-11 w-11 items-center justify-center rounded-md text-secondary transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label="Open menu">
-        <svg
-          aria-hidden="true"
-          class="h-6 w-6"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round">
-          <path d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+        <Menu class="h-6 w-6 group-aria-expanded:hidden" aria-hidden="true" />
+        <X class="hidden h-6 w-6 group-aria-expanded:block" aria-hidden="true" />
       </button>
     </div>
   </div>
@@ -81,8 +83,11 @@ const logo = SITE.logo;
             <li>
               <a
                 href={link.href}
-                data-nav-link={link.href}
-                class="flex min-h-11 items-center px-4 text-sm font-medium text-secondary transition-colors hover:bg-primary-light/60 hover:text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+                aria-current={isActive(link.href) ? "page" : undefined}
+                class:list={[
+                  "flex min-h-11 items-center px-4 text-sm font-medium transition-colors hover:bg-primary-light/60 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+                  navClass(link.href),
+                ]}>
                 {link.label}
               </a>
             </li>
@@ -91,14 +96,14 @@ const logo = SITE.logo;
         <li>
           <a
             href={`tel:${SITE.phoneTel}`}
-            class="flex min-h-11 items-center px-4 text-sm font-medium text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+            class="flex min-h-11 items-center px-4 text-sm font-medium text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
             Call <span class="ml-1">{SITE.phone}</span>
           </a>
         </li>
         <li>
           <a
-            href={`sms:${SITE.phoneTel}`}
-            class="flex min-h-11 items-center px-4 text-sm font-medium text-primary focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
+            href={smsHref(quoteText())}
+            class="flex min-h-11 items-center px-4 text-sm font-medium text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
             Text <span class="ml-1">{SITE.phone}</span>
           </a>
         </li>
@@ -177,17 +182,6 @@ const logo = SITE.logo;
         !toggle.contains(e.target)
       ) {
         close(false);
-      }
-    });
-
-    // Active page marker
-    const here = window.location.pathname;
-    document.querySelectorAll("[data-nav-link]").forEach((a) => {
-      const href = a.getAttribute("href");
-      if (href && (href === here || (href !== "/" && here.startsWith(href)))) {
-        a.setAttribute("aria-current", "page");
-        a.classList.add("font-semibold", "text-primary");
-        a.classList.remove("text-secondary");
       }
     });
   })();

@@ -52,9 +52,9 @@ Explicitly undecided, do not invent:
 ## Evidence on Hand
 
 - 6 real project photos on the home page (pergola removal, fireplace mantel removal, wall tile removal, shelving removal, surface prep, room stripped to the slab) and 12 renovation photos on the services page, all served from ik.imagekit.io/137/rosco-sr/.
-- ImageKit `1.webp`–`12.webp` all exist: `7`/`8` are logo files; `9` is the printed flyer (not a job photo — its worker image is not a real job, keep it off the site); `4` (worker scraping a floor) and `10` are used on About and service pages.
+- ImageKit `1.webp`–`12.webp` all exist: `7`/`8` are logo files; `9` is the printed flyer (not a job photo — its worker image is not a real job, keep it off the site); `4` (worker scraping a floor) is used on About and service pages. `10` is a byte-identical copy of `11` — use `11` only. `3` (shelving with a spirit level on the upright) may show an install, not a removal: no shelving claims until the owner says what it shows.
 - Renovation photos `…5423` and `…5424` are the BEFORE of the same kitchen as `…5405` and `…5422` (after). Label them that way.
-- 2 on-site demo videos (same CDN).
+- 2 on-site videos (same CDN): breaking up an old tiled floor with a demolition hammer; cutting concrete with a saw. Posters come from ImageKit (`<video>.mp4/ik-thumbnail.jpg?tr=so-8,w-640`).
 - Live Airtable quote form and Google Maps embed on the contact page.
 
 Absences future work must not fabricate: testimonials, customer reviews, pricing, licenses, insurance, years in business.

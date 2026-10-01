@@ -1,52 +1,62 @@
 ---
-import { ArrowRight, PaintRoller } from "@lucide/astro";
+// Each service leads with a real job photo. Compact rows on phones, cards
+// from sm up; the last row centres when it isn't full.
+import { ArrowRight } from "@lucide/astro";
 import { services } from "../data/services";
+import { nb } from "../site";
 
 interface Props {
   headingTag?: "h2" | "h3";
 }
 
 const { headingTag: Heading = "h3" } = Astro.props;
-
-const cards = [
-  ...services.map((s) => ({
-    name: s.name,
-    blurb: s.blurb,
-    href: `/services/${s.slug}/`,
-    icon: s.icon,
-  })),
-  {
-    name: "Kitchen & Floor Renovations",
-    blurb: "Kitchens and floors we've renovated around Perth.",
-    href: "/services/#renovations",
-    icon: PaintRoller,
-  },
-];
 ---
 
-<ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+<ul class="flex flex-wrap justify-center gap-3 sm:gap-6">
   {
-    cards.map((card) => (
-      <li>
+    services.map((s) => (
+      <li class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
         <a
-          href={card.href}
-          class="group flex h-full flex-col rounded-2xl bg-surface p-8 ring-1 ring-border transition-all duration-500 hover:shadow-xl motion-safe:hover:-translate-y-1 active:duration-100 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.99] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-primary">
-          <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light text-primary transition-colors duration-500 group-hover:bg-primary group-hover:text-white">
-            <card.icon class="h-6 w-6" aria-hidden="true" />
-          </span>
-          <Heading class="mt-4 text-lg font-semibold leading-6 text-ink">
-            {card.name}
-          </Heading>
-          <p class="mt-2 text-sm leading-6 text-text-subtitle">{card.blurb}</p>
-          <span class="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold leading-6 text-primary">
-            See the details
-            <ArrowRight
-              class="h-4 w-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1"
-              aria-hidden="true"
+          href={`/services/${s.slug}/`}
+          class="group flex h-full items-center gap-4 overflow-hidden rounded-2xl bg-surface p-3 ring-1 ring-border transition-[translate,scale,box-shadow] duration-500 hover:shadow-xl motion-safe:hover:-translate-y-1 active:duration-100 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:flex-col sm:items-stretch sm:gap-0 sm:p-0">
+          <span class="block size-20 shrink-0 overflow-hidden rounded-xl bg-surface-alt sm:aspect-[4/3] sm:size-auto sm:w-full sm:rounded-none">
+            <img
+              src={s.thumb}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105"
             />
           </span>
+          <span class="flex min-w-0 flex-1 flex-col sm:p-6">
+            <Heading class="text-base font-semibold leading-6 text-ink sm:text-lg">
+              {nb(s.name)}
+            </Heading>
+            <span class="mt-1 text-sm leading-6 text-text-subtitle">
+              {s.blurb}
+            </span>
+            <span class="mt-auto hidden items-center gap-2 pt-4 text-sm font-semibold leading-6 text-primary sm:inline-flex">
+              See the details
+              <ArrowRight
+                class="h-4 w-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1"
+                aria-hidden="true"
+              />
+            </span>
+          </span>
+          <ArrowRight
+            class="h-5 w-5 shrink-0 text-primary sm:hidden"
+            aria-hidden="true"
+          />
         </a>
       </li>
     ))
   }
 </ul>
+<p class="mt-8 text-center text-sm leading-6 text-text-subtitle">
+  We also do kitchen and floor renovations.{" "}
+  <a
+    href="/services/#renovations"
+    class="rounded font-semibold text-primary underline decoration-primary/30 underline-offset-4 hover:text-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+    See the photos
+  </a>
+</p>

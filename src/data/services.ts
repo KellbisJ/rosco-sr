@@ -1,6 +1,5 @@
 // One entry = one page at /services/<slug>/.
 // Every claim here traces to PRODUCT.md, the flyer, or a real job photo.
-import { Bath, CookingPot, Grid2x2, Hammer, Layers } from "@lucide/astro";
 import { SITE, crop, photo } from "../site";
 
 // Before and after cut from the same composite and aligned on fixed
@@ -52,8 +51,13 @@ export interface Service {
   lead: string;
   listTitle: string;
   list: string[];
+  // Only what the photos show stayed put. Never a general promise.
+  stays?: string;
+  // The first two photos are the same room, shown side by side.
+  compare?: boolean;
+  doneStep?: string;
+  thumb: string;
   photos: ServicePhoto[];
-  icon: typeof Bath;
 }
 
 const callOrText = `Call or text ${SITE.phone}.`;
@@ -75,6 +79,9 @@ export const services: Service[] = [
       "Tile adhesive, with walls taken back to render",
       "All the rubbish, carted away",
     ],
+    stays:
+      "Whatever isn't on the list. In the bathroom pictured, the door and its frame stayed put.",
+    thumb: crop("2.webp", 272, 706, 560, 560),
     photos: [
       {
         src: photo("2.webp"),
@@ -84,7 +91,6 @@ export const services: Service[] = [
         caption: "Tiles and adhesive off, walls back to render",
       },
     ],
-    icon: Bath,
   },
   {
     slug: "kitchen-removal",
@@ -102,23 +108,26 @@ export const services: Service[] = [
       "Floor tiles, if they're going too",
       "All the rubbish, carted away",
     ],
+    stays:
+      "Whatever isn't on the list. In the kitchen pictured, the floor tiles and window stayed put.",
+    compare: true,
+    thumb: photo("Renovations/6257921321014595423.jpg"),
     photos: [
       {
-        src: photo("Renovations/6257921321014595423.jpg"),
+        src: photo("Renovations/6257921321014595424.jpg"),
         width: 720,
         height: 1280,
-        alt: "Old Perth kitchen with cream cabinets and an electric stove, before renovation",
-        caption: "Before: the old kitchen",
+        alt: "Old Perth kitchen with cream cabinets and a sink under the window, before renovation",
+        caption: "Before",
       },
       {
-        src: photo("Renovations/6257921321014595405.jpg"),
-        width: 810,
+        src: photo("Renovations/6257921321014595422.jpg"),
+        width: 875,
         height: 1280,
-        alt: "The same Perth kitchen after renovation, with new cabinets and a marble-look splashback",
-        caption: "After: same kitchen, renovated",
+        alt: "The same Perth kitchen after renovation, with new cabinets and a marble-look splashback under the same window",
+        caption: "After",
       },
     ],
-    icon: CookingPot,
   },
   {
     slug: "floor-tile-removal",
@@ -135,6 +144,7 @@ export const services: Service[] = [
       "Glue and adhesive, scraped back",
       "All the rubbish, carted away",
     ],
+    thumb: photo("4.webp"),
     photos: [
       {
         src: photo("4.webp"),
@@ -151,23 +161,24 @@ export const services: Service[] = [
         caption: "Slab left clean, ready for the new floor",
       },
     ],
-    icon: Grid2x2,
   },
   {
     slug: "non-structural-demolition",
     name: "Non-Structural Demolition",
-    blurb: "Pergolas, fireplace surrounds, shelving: down and carted away.",
+    blurb: "Pergolas and fireplace surrounds, taken down and carted away.",
     title: `Non-Structural Demolition Perth | ${SITE.name}`,
-    description: `Light, non-structural demolition in Perth. Pergolas, fireplace surrounds and shelving taken down carefully and carted away. ${callOrText}`,
+    description: `Light, non-structural demolition in Perth. Pergolas and fireplace surrounds taken down carefully and carted away. ${callOrText}`,
     heading: "Non-Structural Demolition in Perth",
     lead: "The small demo jobs that come before a reno. Taken down carefully, without wrecking what's staying, and carted away.",
     listTitle: "What we take down",
     list: [
       "Pergolas",
       "Fireplace mantels and surrounds",
-      "Shelving and brackets",
       "All the rubbish, carted away",
     ],
+    stays:
+      "Whatever isn't on the list. On the jobs pictured, the fireplace and hearth tiles stayed intact, and the fence, paving and garden bed stayed as they were.",
+    thumb: fireplaceReveal.before,
     photos: [
       {
         src: photo("6.webp"),
@@ -185,15 +196,7 @@ export const services: Service[] = [
         caption: "Pergola down and gone",
         reveal: pergolaReveal,
       },
-      {
-        src: photo("3.webp"),
-        width: 1280,
-        height: 960,
-        alt: "Wall shelving and brackets being removed on a Perth job",
-        caption: "Wall shelving coming down",
-      },
     ],
-    icon: Hammer,
   },
   {
     slug: "floor-grinding",
@@ -211,6 +214,8 @@ export const services: Service[] = [
       "Walls taken back to render",
       "Concrete cutting and core drilling",
     ],
+    doneStep: "We prep the surface",
+    thumb: photo("12.webp"),
     photos: [
       {
         src: photo("12.webp"),
@@ -220,13 +225,12 @@ export const services: Service[] = [
         caption: "Surface prep on a bare slab",
       },
       {
-        src: photo("10.webp"),
-        width: 591,
+        src: photo("2.webp"),
+        width: 1280,
         height: 1280,
-        alt: "Room with a clean, bare concrete floor ready for the next trade, Perth",
-        caption: "Ready for the next trade",
+        alt: "Walls before and after tile adhesive removal, taken back to render in a Perth home",
+        caption: "Walls taken back to render",
       },
     ],
-    icon: Layers,
   },
 ];

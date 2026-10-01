@@ -6,7 +6,7 @@ import QuoteCta from "../../components/QuoteCta.astro";
 import StripReveal from "../../components/StripReveal.astro";
 import { Check } from "@lucide/astro";
 import { services, type Service } from "../../data/services";
-import { SITE } from "../../site";
+import { SITE, nb } from "../../site";
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -16,8 +16,18 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props as { service: Service };
-const [heroPhoto, ...morePhotos] = service.photos;
+// A compare page shows its first two photos side by side as the hero.
+const pair = service.compare ? service.photos.slice(0, 2) : [];
+const heroPhoto = service.photos[0];
+const morePhotos = service.photos.slice(service.compare ? 2 : 1);
+// Share image: the "after" of a pair, the "before" of a reveal, else the photo.
+const og = pair[1]
+  ? { src: pair[1].src, alt: pair[1].alt }
+  : heroPhoto.reveal
+    ? { src: heroPhoto.reveal.before, alt: heroPhoto.reveal.beforeAlt }
+    : { src: heroPhoto.src, alt: heroPhoto.alt };
 const others = services.filter((s) => s.slug !== service.slug);
+const what = service.name.toLowerCase();
 const pageUrl = `${SITE.url}/services/${service.slug}/`;
 
 const schema = [
@@ -47,39 +57,68 @@ const schema = [
 ];
 
 const crumbLink =
-  "rounded text-secondary transition-colors hover:text-primary hover:underline focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary";
+  "inline-block rounded py-2 text-secondary transition-colors hover:text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+const tag =
+  "pointer-events-none absolute left-3 top-3 rounded-full bg-ink/75 px-3 py-1 text-xs font-semibold text-white";
+const pill =
+  "inline-flex min-h-11 items-center rounded-full bg-surface px-5 text-sm font-semibold text-primary ring-1 ring-border transition-colors hover:bg-primary-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+// Figures hug the photo's own shape instead of a column-wide grey box.
+const figureFit =
+  "mx-auto w-fit max-w-full overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 ring-border";
 ---
 
 <Layout
   title={service.title}
   description={service.description}
-  image={heroPhoto.src}
-  imageAlt={heroPhoto.alt}
+  image={og.src}
+  imageAlt={og.alt}
   schema={schema}>
-  <section class="bg-bg-base py-12 sm:py-20">
+  <section class="bg-bg-base py-10 sm:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <nav aria-label="Breadcrumb" class="text-sm">
-        <ol class="flex flex-wrap items-center gap-2 text-text-secondary">
+        <ol class="flex flex-wrap items-center gap-x-2 text-text-secondary">
           <li><a href="/" class={crumbLink}>Home</a></li>
           <li aria-hidden="true">/</li>
           <li><a href="/services/" class={crumbLink}>Services</a></li>
           <li aria-hidden="true">/</li>
-          <li aria-current="page" class="font-medium text-text-subtitle">
-            {service.name}
+          <li aria-current="page" class="py-2 font-medium text-text-subtitle">
+            {nb(service.name)}
           </li>
         </ol>
       </nav>
       <div
-        class="mt-8 grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-2 lg:items-center">
+        class="mt-6 grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2 lg:items-center">
         <div class="max-w-xl">
-          <h1 class="text-4xl font-bold tracking-tight text-ink sm:text-5xl">
-            {service.heading}
+          <h1
+            class="text-4xl font-bold tracking-tight text-balance break-words hyphens-auto text-ink sm:text-5xl">
+            {nb(service.heading)}
           </h1>
           <p class="mt-6 text-lg leading-8 text-text-body">{service.lead}</p>
-          <CtaButtons class="mt-10" />
+          <CtaButtons class="mt-8" service={what} />
         </div>
         {
-          heroPhoto.reveal ? (
+          pair.length === 2 ? (
+            <figure class="mx-auto w-full max-w-lg overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 ring-border">
+              <div class="grid grid-cols-2 gap-px bg-border">
+                {pair.map((p) => (
+                  <div class="relative aspect-[3/4] bg-surface-alt">
+                    <img
+                      src={p.src}
+                      alt={p.alt}
+                      width={p.width}
+                      height={p.height}
+                      fetchpriority="high"
+                      class="absolute inset-0 h-full w-full object-cover"
+                    />
+                    <span class={tag}>{p.caption}</span>
+                  </div>
+                ))}
+              </div>
+              <figcaption class="px-5 py-3 text-sm text-text-secondary">
+                Same kitchen, before and after the renovation
+              </figcaption>
+            </figure>
+          ) : heroPhoto.reveal ? (
             <StripReveal
               reveal={heroPhoto.reveal}
               caption={heroPhoto.caption}
@@ -87,16 +126,16 @@ const crumbLink =
               class="mx-auto w-full max-w-lg"
             />
           ) : (
-            <figure class="overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
+            <figure class={figureFit}>
               <img
                 src={heroPhoto.src}
                 width={heroPhoto.width}
                 height={heroPhoto.height}
                 alt={heroPhoto.alt}
                 fetchpriority="high"
-                class="h-auto max-h-[36rem] w-full object-contain"
+                class="block h-auto max-h-[36rem] w-auto max-w-full"
               />
-              <figcaption class="px-5 py-3 text-sm text-text-secondary">
+              <figcaption class="w-0 min-w-full px-5 py-3 text-sm text-text-secondary">
                 {heroPhoto.caption}
               </figcaption>
             </figure>
@@ -127,6 +166,14 @@ const crumbLink =
             ))
           }
         </ul>
+        {
+          service.stays && (
+            <p class="mt-8 border-t border-border pt-6 text-base leading-7 text-text-body">
+              <span class="font-semibold text-ink">What stays:</span>{" "}
+              {service.stays}
+            </p>
+          )
+        }
       </div>
     </div>
   </section>
@@ -142,34 +189,30 @@ const crumbLink =
               From real jobs
             </h2>
           </div>
-          <ul
-            class:list={[
-              "mx-auto mt-12 grid grid-cols-1 items-start gap-8",
-              morePhotos.length > 1 ? "max-w-5xl sm:grid-cols-2" : "max-w-xl",
-            ]}>
+          <ul class="mx-auto mt-12 flex max-w-5xl flex-wrap items-start justify-center gap-8">
             {morePhotos.map((p) => (
-              <li>
+              <li class="max-w-full">
                 {p.reveal ? (
                   <StripReveal
                     reveal={p.reveal}
                     caption={p.caption}
-                    class="mx-auto w-full max-w-sm"
+                    class="w-[min(24rem,calc(100vw-2rem))]"
                   />
                 ) : (
-                <figure class="overflow-hidden rounded-2xl bg-surface-alt shadow-lg ring-1 ring-border">
-                  <img
-                    src={p.src}
-                    width={p.width}
-                    height={p.height}
-                    alt={p.alt}
-                    loading="lazy"
-                    decoding="async"
-                    class="h-auto max-h-[32rem] w-full object-contain"
-                  />
-                  <figcaption class="px-5 py-3 text-sm text-text-secondary">
-                    {p.caption}
-                  </figcaption>
-                </figure>
+                  <figure class={figureFit}>
+                    <img
+                      src={p.src}
+                      width={p.width}
+                      height={p.height}
+                      alt={p.alt}
+                      loading="lazy"
+                      decoding="async"
+                      class="block h-auto max-h-[32rem] w-auto max-w-full"
+                    />
+                    <figcaption class="w-0 min-w-full px-5 py-3 text-sm text-text-secondary">
+                      {p.caption}
+                    </figcaption>
+                  </figure>
                 )}
               </li>
             ))}
@@ -181,9 +224,9 @@ const crumbLink =
     )
   }
 
-  <HowItWorks />
+  <HowItWorks done={service.doneStep} />
 
-  <QuoteCta heading={`Need a quote for ${service.name.toLowerCase()}?`} />
+  <QuoteCta heading={`Need a quote for ${nb(what)}?`} service={what} />
 
   <section class="bg-surface-alt py-16 sm:py-20" aria-labelledby="other-jobs">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -196,21 +239,12 @@ const crumbLink =
         {
           others.map((s) => (
             <li>
-              <a
-                href={`/services/${s.slug}/`}
-                class="inline-flex min-h-11 items-center rounded-full bg-surface px-5 text-sm font-semibold text-primary ring-1 ring-border transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
-                {s.name}
+              <a href={`/services/${s.slug}/`} class={pill}>
+                {nb(s.name)}
               </a>
             </li>
           ))
         }
-        <li>
-          <a
-            href="/services/#renovations"
-            class="inline-flex min-h-11 items-center rounded-full bg-surface px-5 text-sm font-semibold text-primary ring-1 ring-border transition-colors hover:bg-primary-light focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary">
-            Kitchen &amp; Floor Renovations
-          </a>
-        </li>
       </ul>
     </div>
   </section>

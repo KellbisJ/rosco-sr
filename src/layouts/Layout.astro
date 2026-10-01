@@ -114,12 +114,14 @@ const business = {
     <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Without JS the strip-back reveal can't play: show the finished job. -->
+    <!-- Without JS: the reveal shows the finished job, and the menu button
+         (which can't open) is hidden; the footer lists every page. -->
     <noscript>
       <style is:inline>
         .strip-reveal .sr-before,
         .strip-reveal .sr-blade,
-        .strip-reveal .sr-controls {
+        .strip-reveal .sr-controls,
+        #mobile-menu-toggle {
           display: none;
         }
       </style>
